@@ -12,33 +12,56 @@
 </head>
 <body>
   <div class="container my-4">
-    <h1 class="text-center">RPG Web App</h1>
 
-    <!-- Campo de Nick -->
-    <div class="mb-3">
-      <label for="nickName" class="form-label">Nick (máx. 15 caracteres):</label>
-      <input type="text" id="nickName" class="form-control" maxlength="15" placeholder="Digite seu apelido">
+    <!-- 🟩 LOBBY -->
+    <div id="lobby">
+      <h1 class="text-center">RPG Web App</h1>
+
+      <div class="mb-3">
+        <label for="nickName" class="form-label">Nick (máx. 15 caracteres):</label>
+        <input type="text" id="nickName" class="form-control" maxlength="15" placeholder="Digite seu apelido">
+      </div>
+
+      <div class="mb-3 text-center">
+        <button id="btnHost" class="btn btn-outline-primary mx-2 disabled">Criar Jogo</button>
+        <button id="btnCliente" class="btn btn-outline-secondary mx-2 disabled">Entrar em Jogo</button>
+      </div>
+
+      <div id="codigoSalaContainer" class="mb-3 d-none">
+        <label for="roomCode" class="form-label">Código da Sala:</label>
+        <input type="text" id="roomCode" class="form-control" placeholder="Digite o código da sala">
+      </div>
+
+      <div class="text-center">
+        <button id="joinBtn" class="btn btn-success d-none">Entrar</button>
+      </div>
+
+      <div id="status" class="alert alert-info d-none mt-3 text-center"></div>
     </div>
 
-    <!-- Botões de seleção -->
-    <div class="mb-3 text-center">
-      <button id="btnHost" class="btn btn-outline-primary mx-2 disabled">Criar Jogo</button>
-      <button id="btnCliente" class="btn btn-outline-secondary mx-2 disabled">Entrar em Jogo</button>
+    <!-- 🟥 SALA DO JOGO -->
+    <div id="sala" class="d-none">
+      <h2 class="text-center mb-4">Sala: <span id="salaCodigo"></span></h2>
+      <p class="text-center">
+        Bem-vindo, <strong id="salaNick"></strong> (<span id="salaRole"></span>)
+      </p>
+
+      <div class="row">
+        <div class="col-md-3">
+          <h5>Jogadores Conectados</h5>
+          <ul id="listaJogadores" class="list-group">
+            <!-- Jogadores serão adicionados aqui via JS -->
+          </ul>
+        </div>
+        <div class="col-md-9">
+          <h5 class="text-center">Mapa Colaborativo</h5>
+          <div id="mapa" class="border p-3 bg-light text-center" style="min-height: 200px;">
+            Área do mapa (em construção)
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- Campo de código da sala (só aparece para jogador) -->
-    <div id="codigoSalaContainer" class="mb-3 d-none">
-      <label for="roomCode" class="form-label">Código da Sala:</label>
-      <input type="text" id="roomCode" class="form-control" placeholder="Digite o código da sala">
-    </div>
-
-    <!-- Botão de Entrar -->
-    <div class="text-center">
-      <button id="joinBtn" class="btn btn-success d-none">Entrar</button>
-    </div>
-
-    <!-- Mensagem de status -->
-    <div id="status" class="alert alert-info d-none mt-3 text-center"></div>
   </div>
 
   <script src="/socket.io/socket.io.js"></script>
