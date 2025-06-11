@@ -6,5 +6,6 @@ app.use('/frontend', express.static(path.join(__dirname, '../frontend')));
 
 // Rota para servir o index.html da raiz
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../index.html'));
+  res.sendFile(path.join(process.cwd(), 'index.html'));
+
 });
