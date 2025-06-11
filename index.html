@@ -1,46 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>RPG Web App</title>
-  <link rel="stylesheet" href="style.css">
-  <!-- Bootstrap CDN -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
     rel="stylesheet"
   >
+  <link rel="stylesheet" href="frontend/style.css" />
 </head>
 <body>
   <div class="container my-4">
     <h1 class="text-center">RPG Web App</h1>
 
-    <!-- Seção do código da sala -->
+    <!-- Campo de Nick -->
     <div class="mb-3">
+      <label for="nickName" class="form-label">Nick (máx. 15 caracteres):</label>
+      <input type="text" id="nickName" class="form-control" maxlength="15" placeholder="Digite seu apelido">
+    </div>
+
+    <!-- Botões de seleção -->
+    <div class="mb-3 text-center">
+      <button id="btnHost" class="btn btn-outline-primary mx-2 disabled">Criar Jogo</button>
+      <button id="btnCliente" class="btn btn-outline-secondary mx-2 disabled">Entrar em Jogo</button>
+    </div>
+
+    <!-- Campo de código da sala (só aparece para jogador) -->
+    <div id="codigoSalaContainer" class="mb-3 d-none">
       <label for="roomCode" class="form-label">Código da Sala:</label>
       <input type="text" id="roomCode" class="form-control" placeholder="Digite o código da sala">
     </div>
 
-    <!-- Seção do nome do jogador -->
-    <div class="mb-3">
-      <label for="playerName" class="form-label">Seu Nome:</label>
-      <input type="text" id="playerName" class="form-control" placeholder="Digite seu nome">
+    <!-- Botão de Entrar -->
+    <div class="text-center">
+      <button id="joinBtn" class="btn btn-success d-none">Entrar</button>
     </div>
 
-    <!-- Botão para conectar -->
-    <button id="joinBtn" class="btn btn-primary mb-3">Conectar</button>
-
-    <!-- Mensagens de status -->
-    <div id="status" class="alert alert-info d-none"></div>
-
-    <!-- Área de mapa colaborativo (inicialmente oculta) -->
-    <div id="mapArea" class="d-none">
-      <h2>Mapa Colaborativo</h2>
-      <p>Aqui vai o canvas ou área de mapa (implementado depois).</p>
-    </div>
+    <!-- Mensagem de status -->
+    <div id="status" class="alert alert-info d-none mt-3 text-center"></div>
   </div>
 
-  <!-- Socket.io Client -->
   <script src="/socket.io/socket.io.js"></script>
-  <script src="main.js"></script>
+  <script src="frontend/main.js"></script>
 </body>
 </html>
