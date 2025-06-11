@@ -1,15 +1,16 @@
 const socket = io();
 
-// Referência de elementos do DOM
 const nickInput = document.getElementById('nickName');
 const btnHost = document.getElementById('btnHost');
 const btnCliente = document.getElementById('btnCliente');
 const roomInput = document.getElementById('roomCode');
+const senhaInput = document.getElementById('roomPassword');
 const roomContainer = document.getElementById('codigoSalaContainer');
+const senhaContainer = document.getElementById('senhaSalaContainer');
 const joinBtn = document.getElementById('joinBtn');
 const statusDiv = document.getElementById('status');
 
-// Lobby e sala
+// Lobby e Sala
 const lobbyDiv = document.getElementById('lobby');
 const salaDiv = document.getElementById('sala');
 
@@ -19,7 +20,8 @@ const salaNickSpan = document.getElementById('salaNick');
 const salaRoleSpan = document.getElementById('salaRole');
 const listaJogadores = document.getElementById('listaJogadores');
 
-let role = null; // 'host' ou 'cliente'
+// 'host' ou 'cliente'
+let role = null; 
 
 // Ativa os botões quando o nick é preenchido
 nickInput.addEventListener('input', () => {
@@ -34,8 +36,8 @@ btnHost.addEventListener('click', () => {
   btnHost.classList.replace('btn-outline-primary', 'btn-primary');
   btnCliente.classList.replace('btn-secondary', 'btn-outline-secondary');
   roomContainer.classList.add('d-none');
+  senhaContainer.classList.remove('d-none');
   joinBtn.classList.remove('d-none');
-  document.getElementById('senhaSalaContainer').classList.remove('d-none');
 });
 
 btnCliente.addEventListener('click', () => {
@@ -43,8 +45,8 @@ btnCliente.addEventListener('click', () => {
   btnCliente.classList.replace('btn-outline-secondary', 'btn-secondary');
   btnHost.classList.replace('btn-primary', 'btn-outline-primary');
   roomContainer.classList.remove('d-none');
+  senhaContainer.classList.add('d-none');
   joinBtn.classList.remove('d-none');
-  document.getElementById('senhaSalaContainer').classList.add('d-none');
 });
 
 // Geração de código automático
@@ -63,6 +65,7 @@ joinBtn.addEventListener('click', () => {
   if (!nick) return showStatus("Informe um nick válido", 'danger');
 
   let roomCode = roomInput.value.trim();
+  const senha = senhaInput?.value || null;
 
   if (role === 'host') {
     roomCode = gerarCodigoSala();
@@ -72,23 +75,21 @@ joinBtn.addEventListener('click', () => {
     return showStatus("Digite um código de sala válido", 'danger');
   }
 
-  // Envia pro servidor
-  socket.emit('joinRoom', { roomCode, playerName: nick, role });
+  socket.emit('joinRoom', { roomCode, playerName: nick, role, senha });
 });
 
-// Quando o servidor confirma entrada
+// Envia pro servidor
 socket.on('joinedRoom', ({ roomCode, playerName, role }) => {
-  // Transição de telas
+	// Transição de telas
   lobbyDiv.classList.add('d-none');
   salaDiv.classList.remove('d-none');
 
-  // Preenche informações da sala
+// Preenche informações da sala
   salaCodigoSpan.textContent = roomCode;
   salaNickSpan.textContent = playerName;
   salaRoleSpan.textContent = role.toUpperCase();
-
-  // Adiciona jogador à lista
-  adicionarJogadorNaLista(playerName, role);
+// Adiciona jogador à lista
+  adicionarJogadorNaLista(playerName, role); /* Quando o servidor confirma entrada*/
 });
 
 // Erro do servidor
@@ -102,7 +103,6 @@ function showStatus(message, type = 'info') {
   statusDiv.className = `alert alert-${type}`;
   statusDiv.classList.remove('d-none');
 }
-
 // Adiciona nome do jogador à lista lateral
 function adicionarJogadorNaLista(nick, tipo) {
   const li = document.createElement('li');
