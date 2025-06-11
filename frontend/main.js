@@ -35,6 +35,7 @@ btnHost.addEventListener('click', () => {
   btnCliente.classList.replace('btn-secondary', 'btn-outline-secondary');
   roomContainer.classList.add('d-none');
   joinBtn.classList.remove('d-none');
+  document.getElementById('senhaSalaContainer').classList.remove('d-none');
 });
 
 btnCliente.addEventListener('click', () => {
@@ -43,6 +44,7 @@ btnCliente.addEventListener('click', () => {
   btnHost.classList.replace('btn-primary', 'btn-outline-primary');
   roomContainer.classList.remove('d-none');
   joinBtn.classList.remove('d-none');
+  document.getElementById('senhaSalaContainer').classList.add('d-none');
 });
 
 // Geração de código automático
