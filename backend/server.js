@@ -3,6 +3,8 @@ const http = require('http');
 const socketIo = require('socket.io');
 const cors = require('cors');
 const path = require('path');
+const salas = {}; // estrutura de controle: { código: { senha, host, jogadores: [] } }
+
 
 // Inicializa o app e o servidor
 const app = express();
@@ -28,17 +30,50 @@ const io = socketIo(server, {
 io.on('connection', (socket) => {
   console.log('Novo jogador conectado:', socket.id);
 
-  socket.on('joinRoom', ({ roomCode, playerName, role }) => {
-    if (!roomCode || !playerName || !role) {
-      socket.emit('errorMessage', 'Todos os campos são obrigatórios!');
+socket.on('joinRoom', ({ roomCode, playerName, role, senha }) => {
+  if (!roomCode || !playerName || !role) {
+    socket.emit('errorMessage', 'Todos os campos são obrigatórios!');
+    return;
+  }
+
+  // Se é host, cria a sala
+  if (role === 'host') {
+    if (salas[roomCode]) {
+      socket.emit('errorMessage', 'Já existe uma sala com esse código.');
       return;
     }
 
-    socket.join(roomCode);
-    console.log(`${playerName} (${role}) entrou na sala ${roomCode}`);
+    salas[roomCode] = {
+      host: socket.id,
+      senha: senha || null,
+      jogadores: [{ id: socket.id, nome: playerName, papel: 'host' }]
+    };
 
+    socket.join(roomCode);
     socket.emit('joinedRoom', { roomCode, playerName, role });
-  });
+
+  } else {
+    const sala = salas[roomCode];
+    if (!sala) {
+      socket.emit('errorMessage', 'Sala não encontrada!');
+      return;
+    }
+
+    if (sala.senha && sala.senha !== senha) {
+      socket.emit('errorMessage', 'Senha incorreta!');
+      return;
+    }
+
+    sala.jogadores.push({ id: socket.id, nome: playerName, papel: 'cliente' });
+
+    socket.join(roomCode);
+    socket.emit('joinedRoom', { roomCode, playerName, role });
+
+    // (Opcional) notificar os outros
+    socket.to(roomCode).emit('playerJoined', { playerName });
+  }
+});
+
 
   socket.on('disconnect', () => {
     console.log('Jogador desconectado:', socket.id);
