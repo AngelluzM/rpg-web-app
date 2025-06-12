@@ -1,6 +1,14 @@
 const socket = io();
 
-// Elementos da interface
+// Geração e persistência de ID do jogador
+function gerarUserId() {
+  return 'user_' + Math.random().toString(36).substring(2, 10);
+}
+
+const userId = localStorage.getItem('userId') || gerarUserId();
+localStorage.setItem('userId', userId);
+
+// Referência de elementos
 const nickInput = document.getElementById('nickName');
 const btnHost = document.getElementById('btnHost');
 const btnCliente = document.getElementById('btnCliente');
@@ -10,10 +18,8 @@ const roomContainer = document.getElementById('codigoSalaContainer');
 const senhaContainer = document.getElementById('senhaSalaContainer');
 const joinBtn = document.getElementById('joinBtn');
 const statusDiv = document.getElementById('status');
-
 const lobbyDiv = document.getElementById('lobby');
 const salaDiv = document.getElementById('sala');
-
 const salaCodigoSpan = document.getElementById('salaCodigo');
 const salaNickSpan = document.getElementById('salaNick');
 const salaRoleSpan = document.getElementById('salaRole');
@@ -28,7 +34,6 @@ nickInput.addEventListener('input', () => {
   btnCliente.classList.toggle('disabled', !valido);
 });
 
-// Botão: Criar Jogo
 btnHost.addEventListener('click', () => {
   role = 'host';
   btnHost.classList.replace('btn-outline-primary', 'btn-primary');
@@ -36,10 +41,9 @@ btnHost.addEventListener('click', () => {
   roomContainer.classList.add('d-none');
   senhaContainer.classList.remove('d-none');
   joinBtn.classList.remove('d-none');
-  senhaInput.placeholder = 'Defina uma senha para a sala (opcional)';
+  senhaInput.placeholder = 'Defina uma senha (opcional)';
 });
 
-// Botão: Entrar em Jogo
 btnCliente.addEventListener('click', () => {
   role = 'cliente';
   btnCliente.classList.replace('btn-outline-secondary', 'btn-secondary');
@@ -50,7 +54,6 @@ btnCliente.addEventListener('click', () => {
   senhaInput.placeholder = 'Digite a senha da sala';
 });
 
-// Gera código aleatório para host
 function gerarCodigoSala() {
   const letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
   const numeros = '0123456789';
@@ -60,7 +63,6 @@ function gerarCodigoSala() {
   return codigo.split('').sort(() => Math.random() - 0.5).join('');
 }
 
-// Botão: Entrar
 joinBtn.addEventListener('click', () => {
   const nick = nickInput.value.trim();
   if (!nick) return showStatus("Informe um nick válido", 'danger');
@@ -68,39 +70,26 @@ joinBtn.addEventListener('click', () => {
   let roomCode = roomInput.value.trim();
   const senha = document.getElementById('roomPassword')?.value?.trim() || null;
 
-  if (role === 'host') {
-    roomCode = gerarCodigoSala();
-  }
-
+  if (role === 'host') roomCode = gerarCodigoSala();
   if (role === 'cliente' && roomCode.length < 6) {
-    return showStatus("Digite um código de sala válido", 'danger');
+    return showStatus("Digite um código válido", 'danger');
   }
 
-  // Salva sessão local
   localStorage.setItem('nick', nick);
   localStorage.setItem('sala', roomCode);
   localStorage.setItem('papel', role);
 
-  // Envia pro servidor
-  socket.emit('joinRoom', { roomCode, playerName: nick, role, senha });
-
-  console.log("role:", role);
-  console.log("nick:", nick);
-  console.log("roomCode:", roomCode);
-  console.log("senha:", senha);
+  socket.emit('joinRoom', { roomCode, playerName: nick, role, senha, userId });
 });
 
-// Entrou com sucesso
 socket.on('joinedRoom', ({ roomCode, playerName, role }) => {
   lobbyDiv.classList.add('d-none');
   salaDiv.classList.remove('d-none');
-
   salaCodigoSpan.textContent = roomCode;
   salaNickSpan.textContent = playerName;
   salaRoleSpan.textContent = role.toUpperCase();
 });
 
-// Atualiza lista de jogadores conectados
 socket.on('updatePlayerList', ({ jogadores }) => {
   listaJogadores.innerHTML = '';
   jogadores.forEach(({ nome, papel }) => {
@@ -111,19 +100,17 @@ socket.on('updatePlayerList', ({ jogadores }) => {
   });
 });
 
-// Exibe erro
 socket.on('errorMessage', (msg) => {
   showStatus(msg, 'danger');
 });
 
-// Mostra mensagem no topo
 function showStatus(message, type = 'info') {
   statusDiv.textContent = message;
   statusDiv.className = `alert alert-${type}`;
   statusDiv.classList.remove('d-none');
 }
 
-// Tenta reconectar usando localStorage
+// Reentrar automaticamente se possível
 window.addEventListener('load', () => {
   const nick = localStorage.getItem('nick');
   const sala = localStorage.getItem('sala');
@@ -134,7 +121,8 @@ window.addEventListener('load', () => {
       roomCode: sala,
       playerName: nick,
       role: papel,
-      senha: null // Aqui poderia pedir novamente se necessário
+      senha: null,
+      userId
     });
   }
 });
