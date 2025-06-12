@@ -33,19 +33,35 @@ nickInput.addEventListener('input', () => {
 // Seleção de papel
 btnHost.addEventListener('click', () => {
   role = 'host';
+
   btnHost.classList.replace('btn-outline-primary', 'btn-primary');
   btnCliente.classList.replace('btn-secondary', 'btn-outline-secondary');
+
   roomContainer.classList.add('d-none');
   senhaContainer.classList.remove('d-none');
   joinBtn.classList.remove('d-none');
+
+  senhaInput.placeholder = 'Defina uma senha para a sala (opcional)';
 });
 
 btnCliente.addEventListener('click', () => {
   role = 'cliente';
+
+  btnCliente.classList.replace('btn-outline-secondary', 'btn-secondary');
+  btnHost.classList.replace('btn-primary', 'btn-outline-primary');
+
+  roomContainer.classList.remove('d-none');
+  senhaContainer.classList.remove('d-none');
+  joinBtn.classList.remove('d-none');
+
+  senhaInput.placeholder = 'Digite a senha da sala';
+});
+
+  role = 'cliente';
   btnCliente.classList.replace('btn-outline-secondary', 'btn-secondary');
   btnHost.classList.replace('btn-primary', 'btn-outline-primary');
   roomContainer.classList.remove('d-none');
-  senhaContainer.classList.add('d-none');
+  senhaContainer.classList.remove('d-none');
   joinBtn.classList.remove('d-none');
 });
 
