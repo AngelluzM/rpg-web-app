@@ -65,7 +65,10 @@ joinBtn.addEventListener('click', () => {
   if (!nick) return showStatus("Informe um nick válido", 'danger');
 
   let roomCode = roomInput.value.trim();
-  const senha = senhaInput?.value || null;
+  const senha = role === 'host'
+  ? (document.getElementById('roomPassword')?.value || null)
+  : null;
+
 
   if (role === 'host') {
     roomCode = gerarCodigoSala();
@@ -76,6 +79,13 @@ joinBtn.addEventListener('click', () => {
   }
 
   socket.emit('joinRoom', { roomCode, playerName: nick, role, senha });
+  
+  //logs
+  console.log("role:", role);
+  console.log("nick:", nick);
+  console.log("roomCode:", roomCode);
+  console.log("senha:", senha);
+
 });
 
 // Envia pro servidor
