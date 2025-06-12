@@ -74,9 +74,8 @@ joinBtn.addEventListener('click', () => {
   if (!nick) return showStatus("Informe um nick válido", 'danger');
 
   let roomCode = roomInput.value.trim();
-  const senha = role === 'host'
-  ? (document.getElementById('roomPassword')?.value || null)
-  : null;
+  const senha = document.getElementById('roomPassword')?.value?.trim() || null;
+
 
 
   if (role === 'host') {
