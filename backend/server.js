@@ -32,6 +32,72 @@ io.on('connection', (socket) => {
       return;
     }
 
+    senha = (senha || '').trim();
+
+    if (role === 'host') {
+      if (salas[roomCode]) {
+        socket.emit('errorMessage', 'Já existe uma sala com esse código.');
+        return;
+      }
+
+      salas[roomCode] = {
+        senha: senha || null,
+        host: socket.id,
+        jogadores: [{ id: socket.id, nome: playerName, papel: 'host' }]
+      };
+
+    } else {
+      const sala = salas[roomCode];
+      if (!sala) {
+        socket.emit('errorMessage', 'Sala não encontrada!');
+        return;
+      }
+
+      if (sala.senha && sala.senha !== senha) {
+        socket.emit('errorMessage', 'Senha incorreta!');
+        return;
+      }
+
+      sala.jogadores.push({ id: socket.id, nome: playerName, papel: 'cliente' });
+    }
+
+    socket.join(roomCode);
+
+    // Confirmação para o jogador que entrou
+    socket.emit('joinedRoom', { roomCode, playerName, role });
+
+    // Atualiza lista de jogadores para todos da sala
+    io.to(roomCode).emit('updatePlayerList', {
+      jogadores: salas[roomCode].jogadores
+    });
+  });
+
+  socket.on('disconnect', () => {
+    console.log('Jogador desconectado:', socket.id);
+
+    // Remove jogador de qualquer sala que estiver
+    for (const [codigo, sala] of Object.entries(salas)) {
+      const index = sala.jogadores.findIndex(j => j.id === socket.id);
+      if (index !== -1) {
+        sala.jogadores.splice(index, 1);
+        io.to(codigo).emit('updatePlayerList', {
+          jogadores: sala.jogadores
+        });
+        break;
+      }
+    }
+  });
+});
+
+
+  console.log('Novo jogador conectado:', socket.id);
+
+  socket.on('joinRoom', ({ roomCode, playerName, role, senha }) => {
+    if (!roomCode || !playerName || !role) {
+      socket.emit('errorMessage', 'Todos os campos são obrigatórios!');
+      return;
+    }
+
     // Sanitize senha (remove espaços e garante string)
     senha = (senha || '').trim();
 
