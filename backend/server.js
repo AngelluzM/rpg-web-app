@@ -52,10 +52,11 @@ io.on('connection', (socket) => {
         return;
       }
 
-      if (sala.senha && sala.senha !== senha) {
+      if (sala.senha && sala.senha !== (senha || '').trim()) {
         socket.emit('errorMessage', 'Senha incorreta!');
         return;
-      }
+}
+
 
       sala.jogadores.push({ id: socket.id, nome: playerName, papel: 'cliente' });
 
