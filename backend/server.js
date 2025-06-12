@@ -7,10 +7,7 @@ const path = require('path');
 const app = express();
 app.use(cors());
 
-// Servir arquivos estáticos do frontend
 app.use('/frontend', express.static(path.join(__dirname, '../frontend')));
-
-// Servir o index.html
 app.get('/', (req, res) => {
   res.sendFile(path.join(process.cwd(), 'index.html'));
 });
@@ -20,62 +17,79 @@ const io = socketIo(server, {
   cors: { origin: '*' }
 });
 
-// Estrutura de controle de salas
 const salas = {};
 
 io.on('connection', (socket) => {
-  console.log('Novo jogador conectado:', socket.id);
+  console.log('Conectado:', socket.id);
 
-  socket.on('joinRoom', ({ roomCode, playerName, role, senha }) => {
-    if (!roomCode || !playerName || !role) {
-      socket.emit('errorMessage', 'Todos os campos são obrigatórios!');
+  socket.on('joinRoom', ({ roomCode, playerName, role, senha, userId }) => {
+    if (!roomCode || !playerName || !role || !userId) {
+      socket.emit('errorMessage', 'Dados incompletos para conexão.');
       return;
     }
 
     senha = (senha || '').trim();
 
-    if (role === 'host') {
-      if (salas[roomCode]) {
-        socket.emit('errorMessage', 'Já existe uma sala com esse código.');
-        return;
-      }
-
-      salas[roomCode] = {
-        senha: senha || null,
-        host: socket.id,
-        jogadores: [{ id: socket.id, nome: playerName, papel: 'host' }]
-      };
-
-    } else {
-      const sala = salas[roomCode];
-      if (!sala) {
+    if (!salas[roomCode]) {
+      if (role !== 'host') {
         socket.emit('errorMessage', 'Sala não encontrada!');
         return;
       }
 
+      // Criar nova sala
+      salas[roomCode] = {
+        senha: senha || null,
+        host: socket.id,
+        jogadores: [{
+          id: socket.id,
+          userId,
+          nome: playerName,
+          papel: role
+        }]
+      };
+    } else {
+      const sala = salas[roomCode];
+
+      if (role === 'host' && sala.host !== socket.id) {
+        const hostReconectando = sala.jogadores.find(j => j.userId === userId && j.papel === 'host');
+        if (hostReconectando) {
+          sala.host = socket.id;
+          hostReconectando.id = socket.id;
+        } else {
+          socket.emit('errorMessage', 'Já existe uma sala com esse código.');
+          return;
+        }
+      }
+
+      // Verifica senha
       if (sala.senha && sala.senha !== senha) {
         socket.emit('errorMessage', 'Senha incorreta!');
         return;
       }
 
-      sala.jogadores.push({ id: socket.id, nome: playerName, papel: 'cliente' });
+      // Verifica se jogador já existe (reconectando)
+      const jogador = sala.jogadores.find(j => j.userId === userId);
+      if (jogador) {
+        jogador.id = socket.id;
+      } else {
+        sala.jogadores.push({
+          id: socket.id,
+          userId,
+          nome: playerName,
+          papel: role
+        });
+      }
     }
 
     socket.join(roomCode);
-
-    // Confirmação para o jogador que entrou
     socket.emit('joinedRoom', { roomCode, playerName, role });
-
-    // Atualiza lista de jogadores para todos da sala
     io.to(roomCode).emit('updatePlayerList', {
       jogadores: salas[roomCode].jogadores
     });
   });
 
   socket.on('disconnect', () => {
-    console.log('Jogador desconectado:', socket.id);
-
-    // Remove jogador de qualquer sala que estiver
+    console.log('Desconectado:', socket.id);
     for (const [codigo, sala] of Object.entries(salas)) {
       const index = sala.jogadores.findIndex(j => j.id === socket.id);
       if (index !== -1) {
