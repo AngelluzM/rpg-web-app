@@ -1,5 +1,6 @@
 const socket = io();
 
+// Elementos da interface
 const nickInput = document.getElementById('nickName');
 const btnHost = document.getElementById('btnHost');
 const btnCliente = document.getElementById('btnCliente');
@@ -10,55 +11,46 @@ const senhaContainer = document.getElementById('senhaSalaContainer');
 const joinBtn = document.getElementById('joinBtn');
 const statusDiv = document.getElementById('status');
 
-// Lobby e Sala
 const lobbyDiv = document.getElementById('lobby');
 const salaDiv = document.getElementById('sala');
 
-// Dados da sala
 const salaCodigoSpan = document.getElementById('salaCodigo');
 const salaNickSpan = document.getElementById('salaNick');
 const salaRoleSpan = document.getElementById('salaRole');
 const listaJogadores = document.getElementById('listaJogadores');
 
-// 'host' ou 'cliente'
-let role = null; 
+let role = null;
 
-// Ativa os botões quando o nick é preenchido
+// Ativa botões quando digita nick
 nickInput.addEventListener('input', () => {
   const valido = nickInput.value.trim().length > 0;
   btnHost.classList.toggle('disabled', !valido);
   btnCliente.classList.toggle('disabled', !valido);
 });
 
-// Seleção de papel
+// Botão: Criar Jogo
 btnHost.addEventListener('click', () => {
   role = 'host';
-
   btnHost.classList.replace('btn-outline-primary', 'btn-primary');
   btnCliente.classList.replace('btn-secondary', 'btn-outline-secondary');
-
   roomContainer.classList.add('d-none');
   senhaContainer.classList.remove('d-none');
   joinBtn.classList.remove('d-none');
-
   senhaInput.placeholder = 'Defina uma senha para a sala (opcional)';
 });
 
+// Botão: Entrar em Jogo
 btnCliente.addEventListener('click', () => {
   role = 'cliente';
-
   btnCliente.classList.replace('btn-outline-secondary', 'btn-secondary');
   btnHost.classList.replace('btn-primary', 'btn-outline-primary');
-
   roomContainer.classList.remove('d-none');
   senhaContainer.classList.remove('d-none');
   joinBtn.classList.remove('d-none');
-
   senhaInput.placeholder = 'Digite a senha da sala';
 });
 
-
-// Geração de código automático
+// Gera código aleatório para host
 function gerarCodigoSala() {
   const letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
   const numeros = '0123456789';
@@ -68,7 +60,7 @@ function gerarCodigoSala() {
   return codigo.split('').sort(() => Math.random() - 0.5).join('');
 }
 
-// Clique no botão "Entrar"
+// Botão: Entrar
 joinBtn.addEventListener('click', () => {
   const nick = nickInput.value.trim();
   if (!nick) return showStatus("Informe um nick válido", 'danger');
@@ -84,6 +76,12 @@ joinBtn.addEventListener('click', () => {
     return showStatus("Digite um código de sala válido", 'danger');
   }
 
+  // Salva sessão local
+  localStorage.setItem('nick', nick);
+  localStorage.setItem('sala', roomCode);
+  localStorage.setItem('papel', role);
+
+  // Envia pro servidor
   socket.emit('joinRoom', { roomCode, playerName: nick, role, senha });
 
   console.log("role:", role);
@@ -92,36 +90,51 @@ joinBtn.addEventListener('click', () => {
   console.log("senha:", senha);
 });
 
-
-// Envia pro servidor
+// Entrou com sucesso
 socket.on('joinedRoom', ({ roomCode, playerName, role }) => {
-	// Transição de telas
   lobbyDiv.classList.add('d-none');
   salaDiv.classList.remove('d-none');
 
-// Preenche informações da sala
   salaCodigoSpan.textContent = roomCode;
   salaNickSpan.textContent = playerName;
   salaRoleSpan.textContent = role.toUpperCase();
-// Adiciona jogador à lista
-  adicionarJogadorNaLista(playerName, role); /* Quando o servidor confirma entrada*/
 });
 
-// Erro do servidor
+// Atualiza lista de jogadores conectados
+socket.on('updatePlayerList', ({ jogadores }) => {
+  listaJogadores.innerHTML = '';
+  jogadores.forEach(({ nome, papel }) => {
+    const li = document.createElement('li');
+    li.classList.add('list-group-item');
+    li.textContent = `${nome} ${papel === 'host' ? '(Mestre)' : ''}`;
+    listaJogadores.appendChild(li);
+  });
+});
+
+// Exibe erro
 socket.on('errorMessage', (msg) => {
   showStatus(msg, 'danger');
 });
 
-// Mostra mensagens no topo
+// Mostra mensagem no topo
 function showStatus(message, type = 'info') {
   statusDiv.textContent = message;
   statusDiv.className = `alert alert-${type}`;
   statusDiv.classList.remove('d-none');
 }
-// Adiciona nome do jogador à lista lateral
-function adicionarJogadorNaLista(nick, tipo) {
-  const li = document.createElement('li');
-  li.classList.add('list-group-item');
-  li.textContent = `${nick} ${tipo === 'host' ? '(Mestre)' : ''}`;
-  listaJogadores.appendChild(li);
-}
+
+// Tenta reconectar usando localStorage
+window.addEventListener('load', () => {
+  const nick = localStorage.getItem('nick');
+  const sala = localStorage.getItem('sala');
+  const papel = localStorage.getItem('papel');
+
+  if (nick && sala && papel) {
+    socket.emit('joinRoom', {
+      roomCode: sala,
+      playerName: nick,
+      role: papel,
+      senha: null // Aqui poderia pedir novamente se necessário
+    });
+  }
+});
