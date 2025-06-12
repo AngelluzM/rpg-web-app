@@ -76,8 +76,6 @@ joinBtn.addEventListener('click', () => {
   let roomCode = roomInput.value.trim();
   const senha = document.getElementById('roomPassword')?.value?.trim() || null;
 
-
-
   if (role === 'host') {
     roomCode = gerarCodigoSala();
   }
@@ -87,14 +85,13 @@ joinBtn.addEventListener('click', () => {
   }
 
   socket.emit('joinRoom', { roomCode, playerName: nick, role, senha });
-  
-  //logs
+
   console.log("role:", role);
   console.log("nick:", nick);
   console.log("roomCode:", roomCode);
   console.log("senha:", senha);
-
 });
+
 
 // Envia pro servidor
 socket.on('joinedRoom', ({ roomCode, playerName, role }) => {
