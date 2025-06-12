@@ -57,13 +57,6 @@ btnCliente.addEventListener('click', () => {
   senhaInput.placeholder = 'Digite a senha da sala';
 });
 
-  role = 'cliente';
-  btnCliente.classList.replace('btn-outline-secondary', 'btn-secondary');
-  btnHost.classList.replace('btn-primary', 'btn-outline-primary');
-  roomContainer.classList.remove('d-none');
-  senhaContainer.classList.remove('d-none');
-  joinBtn.classList.remove('d-none');
-});
 
 // Geração de código automático
 function gerarCodigoSala() {
