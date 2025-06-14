@@ -85,6 +85,15 @@ input, .btn {
   margin: 5px 0;
 }
 
+.alert-msg {
+  color: #ff5555;
+  font-size: 14px;
+}
+
+input.alerta {
+  border: 2px solid #ff5555;
+}
+
 .sidebar ul {
   list-style: none;
   padding: 0;
