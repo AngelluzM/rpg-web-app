@@ -22,6 +22,8 @@
 
     <input type="text" id="roomCode" class="hidden" placeholder="Código da Sala" />
     <input type="password" id="roomPassword" class="hidden" placeholder="Senha da Sala (opcional)" />
+	<input type="number" id="limiteJogadores" class="hidden" placeholder="Limite de Jogadores" min="1" max="20" value="5" />
+
 
     <button id="joinBtn" class="btn hidden">Confirmar</button>
     <button id="btnVoltar" class="btn hidden">Voltar</button>
@@ -46,7 +48,7 @@
         <h4>Jogadores Conectados:</h4>
         <ul id="listaJogadores"></ul>
 
-        <button id="btnExportar" class="btn">Exportar Sala (.json)</button>
+        <button id="btnExportar" class="btn">Exportar</button>
         <input type="file" id="inputImportar" accept=".json">
 
       </div>
