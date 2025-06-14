@@ -11,22 +11,25 @@
 
     <!-- Tela inicial (Lobby) -->
     <div id="lobby" class="screen">
-      <div class="form-container">
-        <h1>RPG Web App</h1>
+  <div class="form-container">
+    <h1>RPG Web App</h1>
 
-        <input type="text" id="nickName" placeholder="Digite seu apelido" maxlength="15" />
+    <input type="text" id="nickName" placeholder="Digite seu apelido" maxlength="15" />
+    <div id="nickAlerta" class="alert-msg hidden">* obrigatório definir um nick</div>
 
-        <button id="btnHost" class="btn">Criar Jogo</button>
-        <button id="btnCliente" class="btn">Entrar em Jogo</button>
+    <button id="btnHost" class="btn">Criar Sala</button>
+    <button id="btnCliente" class="btn">Acessar Sala</button>
 
-        <input type="text" id="roomCode" class="hidden" placeholder="Código da Sala" />
-        <input type="password" id="roomPassword" class="hidden" placeholder="Senha da Sala (opcional)" />
+    <input type="text" id="roomCode" class="hidden" placeholder="Código da Sala" />
+    <input type="password" id="roomPassword" class="hidden" placeholder="Senha da Sala (opcional)" />
 
-        <button id="joinBtn" class="btn hidden">Entrar</button>
+    <button id="joinBtn" class="btn hidden">Confirmar</button>
+    <button id="btnVoltar" class="btn hidden">Voltar</button>
 
-        <div id="status" class="status-msg hidden"></div>
-      </div>
-    </div>
+    <div id="status" class="status-msg hidden"></div>
+  </div>
+</div>
+
 
     <!-- Tela da Sala de Jogo -->
     <div id="sala" class="screen hidden">
