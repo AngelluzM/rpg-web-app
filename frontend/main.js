@@ -1,21 +1,22 @@
 const socket = io();
 
-// Gerar e persistir userId único
+// UserId único persistente
 const userId = localStorage.getItem('userId') || ('user_' + Math.random().toString(36).substr(2, 9));
 localStorage.setItem('userId', userId);
 
-// Referências de elementos do DOM
+// Elementos DOM
 const nickInput = document.getElementById('nickName');
 const btnHost = document.getElementById('btnHost');
 const btnCliente = document.getElementById('btnCliente');
 const roomInput = document.getElementById('roomCode');
 const senhaInput = document.getElementById('roomPassword');
 const joinBtn = document.getElementById('joinBtn');
+const btnVoltar = document.getElementById('btnVoltar');
 const statusDiv = document.getElementById('status');
+const nickAlerta = document.getElementById('nickAlerta');
 
 const lobbyDiv = document.getElementById('lobby');
 const salaDiv = document.getElementById('sala');
-
 const salaCodigoSpan = document.getElementById('salaCodigo');
 const salaNickSpan = document.getElementById('salaNick');
 const salaRoleSpan = document.getElementById('salaRole');
@@ -24,48 +25,86 @@ const btnSair = document.getElementById('btnSair');
 
 let role = null;
 
-// Inicializa campos escondidos
-roomInput.classList.add('hidden');
-senhaInput.classList.add('hidden');
-joinBtn.classList.add('hidden');
+// Função para verificar nick preenchido
+function verificaNick() {
+  const nick = nickInput.value.trim();
+  if (!nick) {
+    nickAlerta.classList.remove('hidden');
+    nickInput.classList.add('alerta');
+    return false;
+  }
+  return true;
+}
 
-// Ativa botões se nick preenchido
-nickInput.addEventListener('input', () => {
-  const valido = nickInput.value.trim().length > 0;
-  btnHost.disabled = !valido;
-  btnCliente.disabled = !valido;
+// Ocultar alerta ao focar no campo nick
+nickInput.addEventListener('focus', () => {
+  nickAlerta.classList.add('hidden');
+  nickInput.classList.remove('alerta');
 });
 
-// Criar Jogo (Host)
+// Botão "Criar Sala"
 btnHost.addEventListener('click', () => {
+  if (!verificaNick()) return;
+
   role = 'host';
-  btnHost.disabled = true;
-  btnCliente.disabled = false;
-
+  senhaInput.classList.remove('hidden');
+  joinBtn.textContent = "Confirmar";
+  joinBtn.classList.remove('hidden');
+  btnVoltar.classList.remove('hidden');
   roomInput.classList.add('hidden');
-  senhaInput.classList.remove('hidden');
-  joinBtn.classList.remove('hidden');
+
+  btnHost.classList.add('hidden');
+  btnCliente.classList.add('hidden');
 });
 
-// Entrar em Jogo (Cliente)
+// Botão "Acessar Sala"
 btnCliente.addEventListener('click', () => {
-  role = 'cliente';
-  btnCliente.disabled = true;
-  btnHost.disabled = false;
+  if (!verificaNick()) return;
 
-  roomInput.classList.remove('hidden');
+  role = 'cliente';
   senhaInput.classList.remove('hidden');
+  roomInput.classList.remove('hidden');
+  joinBtn.textContent = "Confirmar";
   joinBtn.classList.remove('hidden');
+  btnVoltar.classList.remove('hidden');
+
+  btnHost.classList.add('hidden');
+  btnCliente.classList.add('hidden');
 });
 
-// Entrar na sala
+// Botão "Voltar"
+btnVoltar.addEventListener('click', () => {
+  role = null;
+
+  senhaInput.classList.add('hidden');
+  roomInput.classList.add('hidden');
+  joinBtn.classList.add('hidden');
+  btnVoltar.classList.add('hidden');
+
+  btnHost.classList.remove('hidden');
+  btnCliente.classList.remove('hidden');
+
+  nickInput.value = '';
+  roomInput.value = '';
+  senhaInput.value = '';
+});
+
+// Clique no botão "Confirmar"
 joinBtn.addEventListener('click', () => {
   const nick = nickInput.value.trim();
   const senha = senhaInput.value.trim() || null;
   let roomCode = roomInput.value.trim();
 
+  if (!nick) {
+    showStatus("Informe um nick válido.", 'danger');
+    return;
+  }
+
   if (role === 'host') roomCode = gerarCodigoSala();
-  if (role === 'cliente' && roomCode.length < 6) return showStatus("Código inválido.", 'danger');
+  if (role === 'cliente' && roomCode.length < 6) {
+    showStatus("Código da sala inválido.", 'danger');
+    return;
+  }
 
   localStorage.setItem('nick', nick);
   localStorage.setItem('sala', roomCode);
@@ -74,14 +113,14 @@ joinBtn.addEventListener('click', () => {
   socket.emit('joinRoom', { roomCode, playerName: nick, role, senha, userId });
 });
 
-// Geração de código aleatório pra sala
+// Gerar código aleatório para sala
 function gerarCodigoSala() {
   const letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
   const numeros = '0123456789';
   return [...Array(8)].map(() => Math.random() > 0.5 ? letras.charAt(Math.floor(Math.random() * letras.length)) : numeros.charAt(Math.floor(Math.random() * numeros.length))).join('');
 }
 
-// Entrou com sucesso
+// Evento: entrou na sala
 socket.on('joinedRoom', ({ roomCode, playerName, role }) => {
   lobbyDiv.classList.add('hidden');
   salaDiv.classList.remove('hidden');
@@ -93,7 +132,7 @@ socket.on('joinedRoom', ({ roomCode, playerName, role }) => {
   showStatus("Conectado à sala!", 'success');
 });
 
-// Atualiza lista de jogadores conectados
+// Atualizar lista jogadores
 socket.on('updatePlayerList', ({ jogadores }) => {
   listaJogadores.innerHTML = '';
   jogadores.forEach(({ nome, papel }) => {
@@ -103,12 +142,12 @@ socket.on('updatePlayerList', ({ jogadores }) => {
   });
 });
 
-// Mensagem de erro do servidor
+// Receber erro do servidor
 socket.on('errorMessage', (msg) => {
   showStatus(msg, 'danger');
 });
 
-// Exibe status/mensagem
+// Exibir mensagens de status
 function showStatus(message, type = 'info') {
   statusDiv.textContent = message;
   statusDiv.className = `status-msg ${type}`;
@@ -116,13 +155,13 @@ function showStatus(message, type = 'info') {
   setTimeout(() => statusDiv.classList.add('hidden'), 4000);
 }
 
-// Botão desconectar
+// Botão "Desconectar"
 btnSair.addEventListener('click', () => {
   localStorage.clear();
   window.location.reload();
 });
 
-// Reentrar automaticamente usando localStorage
+// Reconexão automática ao recarregar a página
 window.addEventListener('load', () => {
   const nick = localStorage.getItem('nick');
   const sala = localStorage.getItem('sala');
@@ -133,13 +172,13 @@ window.addEventListener('load', () => {
   }
 });
 
-// Exportar sala como JSON
+// Exportação JSON (exemplo básico)
 document.getElementById('btnExportar').addEventListener('click', () => {
   const dados = {
     sala: localStorage.getItem('sala'),
     host: { userId, nome: localStorage.getItem('nick') },
-    jogadores: [], // integrar dados reais depois
-    mapa: {},      // integrar dados reais depois
+    jogadores: [], // preencher depois
+    mapa: {}, // preencher depois
   };
   const blob = new Blob([JSON.stringify(dados, null, 2)], {type: 'application/json'});
   const link = document.createElement('a');
@@ -150,7 +189,7 @@ document.getElementById('btnExportar').addEventListener('click', () => {
   link.remove();
 });
 
-// Importar sala JSON
+// Importação JSON (exemplo básico)
 document.getElementById('inputImportar').addEventListener('change', (event) => {
   const file = event.target.files[0];
   if (!file) return;
