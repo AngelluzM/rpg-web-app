@@ -3,7 +3,7 @@ import { limparDadosJogador } from './storage.js';
 import { showStatus } from './utils.js';
 
 export function iniciarSala() {
-  // Elementos da interface da sala
+  // Elementos principais da sala
   const salaDiv = document.getElementById('sala');
   const lobbyDiv = document.getElementById('lobby');
   const salaCodigoSpan = document.getElementById('salaCodigo');
@@ -15,7 +15,7 @@ export function iniciarSala() {
   const inputImportar = document.getElementById('inputImportar');
   const statusDiv = document.getElementById('status');
 
-  // Quando servidor confirma entrada na sala
+  // Ao entrar na sala
   socket.on('joinedRoom', ({ roomCode, playerName, role }) => {
     lobbyDiv.classList.add('hidden');
     salaDiv.classList.remove('hidden');
@@ -25,9 +25,16 @@ export function iniciarSala() {
     salaRoleSpan.textContent = role.toUpperCase();
 
     showStatus(statusDiv, "Conectado à sala!", 'success');
+
+    // Mostrar ou ocultar botão de exportar com base no papel
+    if (role === 'host') {
+      btnExportar.classList.remove('hidden');
+    } else {
+      btnExportar.classList.add('hidden');
+    }
   });
 
-  // Atualiza lista de jogadores
+  // Atualizar lista de jogadores
   socket.on('updatePlayerList', ({ jogadores }) => {
     listaJogadores.innerHTML = '';
     jogadores.forEach(({ nome, papel }) => {
@@ -43,16 +50,22 @@ export function iniciarSala() {
     window.location.reload();
   });
 
-  // Exportar Sala como JSON (mock)
+  // Exportar sala (apenas host)
   btnExportar.addEventListener('click', () => {
+    const papel = localStorage.getItem('papel');
+    if (papel !== 'host') {
+      showStatus(statusDiv, "Apenas o Mestre pode exportar a sala!", 'danger');
+      return;
+    }
+
     const dados = {
       sala: localStorage.getItem('sala'),
       host: {
         userId: localStorage.getItem('userId'),
         nome: localStorage.getItem('nick')
       },
-      jogadores: [], // você pode preencher com jogadores reais depois
-      mapa: {}, // idem
+      jogadores: [], // Popular depois com dados reais se quiser
+      mapa: {},      // Idem
     };
     const blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' });
     const link = document.createElement('a');
@@ -63,7 +76,7 @@ export function iniciarSala() {
     link.remove();
   });
 
-  // Importar Sala JSON (mock)
+  // Importar sala JSON (qualquer um pode abrir, só exemplo)
   inputImportar.addEventListener('change', (event) => {
     const file = event.target.files[0];
     if (!file) return;
@@ -81,7 +94,7 @@ export function iniciarSala() {
     reader.readAsText(file);
   });
 
-  // Receber erro do servidor na sala também (opcional)
+  // Recebe erros do servidor na sala também
   socket.on('errorMessage', (msg) => {
     showStatus(statusDiv, msg, 'danger');
   });
