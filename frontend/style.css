@@ -1,21 +1,117 @@
-body {
-  background-color: #f8f9fa; /* Cinzinha padrão Bootstrap */
+/* Básico geral */
+body.dark-mode {
+  margin: 0;
+  padding: 0;
+  background: #000;
+  color: #eee;
   font-family: Arial, sans-serif;
+  overflow: hidden;
 }
 
-h1 {
-  color: #343a40;
-  text-align: center;
-  margin-bottom: 20px;
+#container-geral {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
 }
 
-#status {
-  text-align: center;
+/* Telas (lobby e sala) */
+.screen {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-#mapArea {
-  border: 2px dashed #6c757d;
+.hidden {
+  display: none !important;
+}
+
+.form-container {
+  background: #111;
   padding: 20px;
-  background-color: #ffffff;
-  min-height: 200px;
+  border-radius: 6px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+input, .btn {
+  padding: 8px;
+  border-radius: 4px;
+  border: none;
+  font-size: 16px;
+}
+
+.btn {
+  cursor: pointer;
+  background: #444;
+  color: #fff;
+}
+
+.btn:hover {
+  background: #666;
+}
+
+.status-msg {
+  padding: 8px;
+  border-radius: 4px;
+  background: #222;
+  font-size: 14px;
+}
+
+/* Área do Mapa */
+.map-area {
+  width: 100%;
+  height: 100%;
+  background-color: #0e0e0e;
+  overflow: hidden;
+}
+
+/* Sidebar (lista jogadores e ações) */
+.sidebar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 200px;
+  height: 100%;
+  background: rgba(20,20,20,0.9);
+  padding: 15px;
+  overflow-y: auto;
+}
+
+.sidebar h3, .sidebar h4 {
+  margin: 5px 0;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.sidebar ul li {
+  padding: 4px;
+  background: #333;
+  margin-bottom: 5px;
+  border-radius: 3px;
+}
+
+/* Botão Desconectar */
+.disconnect-btn {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: #ccc;
+  color: #333;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.disconnect-btn:hover {
+  background: #aaa;
 }
