@@ -39,6 +39,9 @@ export function iniciarLobby() {
     if (!verificaNick()) return;
 
     role = 'host';
+	
+	console.log("Botão Criar Sala clicado!");
+	console.log("limiteInput:", limiteInput);
 
     senhaInput.classList.remove('hidden');
     limiteInput.classList.remove('hidden');
