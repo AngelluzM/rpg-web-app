@@ -4,72 +4,52 @@
   <meta charset="UTF-8" />
   <title>RPG Web App</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  >
   <link rel="stylesheet" href="frontend/style.css" />
 </head>
-<body>
-  <div class="container my-4">
+<body class="dark-mode">
+  <div id="container-geral">
 
-    <!-- 🟩 LOBBY -->
-    <div id="lobby">
-      <h1 class="text-center">RPG Web App</h1>
+    <!-- Tela inicial (Lobby) -->
+    <div id="lobby" class="screen">
+      <div class="form-container">
+        <h1>RPG Web App</h1>
 
-      <div class="mb-3">
-        <label for="nickName" class="form-label">Nick (máx. 15 caracteres):</label>
-        <input type="text" id="nickName" class="form-control" maxlength="15" placeholder="Digite seu apelido">
+        <input type="text" id="nickName" placeholder="Digite seu apelido" maxlength="15" />
+
+        <button id="btnHost" class="btn">Criar Jogo</button>
+        <button id="btnCliente" class="btn">Entrar em Jogo</button>
+
+        <input type="text" id="roomCode" class="hidden" placeholder="Código da Sala" />
+        <input type="password" id="roomPassword" class="hidden" placeholder="Senha da Sala (opcional)" />
+
+        <button id="joinBtn" class="btn hidden">Entrar</button>
+
+        <div id="status" class="status-msg hidden"></div>
       </div>
-	  <div id="senhaSalaContainer" class="mb-3 d-none">
-	    <label for="roomPassword" class="form-label">Senha da Sala (opcional):</label>
-	    <input type="password" id="roomPassword" class="form-control" maxlength="20" placeholder="Digite uma senha (opcional)">
-	  </div>
-
-
-      <div class="mb-3 text-center">
-        <button id="btnHost" class="btn btn-outline-primary mx-2 disabled">Criar Jogo</button>
-        <button id="btnCliente" class="btn btn-outline-secondary mx-2 disabled">Entrar em Jogo</button>
-      </div>
-
-      <div id="codigoSalaContainer" class="mb-3 d-none">
-        <label for="roomCode" class="form-label">Código da Sala:</label>
-        <input type="text" id="roomCode" class="form-control" placeholder="Digite o código da sala">
-      </div>
-
-      <div class="text-center">
-        <button id="joinBtn" class="btn btn-success d-none">Entrar</button>
-      </div>
-
-      <div id="status" class="alert alert-info d-none mt-3 text-center"></div>
     </div>
 
-    <!-- 🟥 SALA DO JOGO -->
-    <div id="sala" class="d-none">
-      <h2 class="text-center mb-4">Sala: <span id="salaCodigo"></span></h2>
-      <p class="text-center">
-        Bem-vindo, <strong id="salaNick"></strong> (<span id="salaRole"></span>)
-      </p>
-	  <div class="mt-3">
-		<button id="btnExportar" class="btn btn-outline-primary">Exportar Sala (.json)</button>
-		  <input type="file" id="inputImportar" class="form-control mt-2" accept=".json">
-	  </div>
-
-
-      <div class="row">
-        <div class="col-md-3">
-          <h5>Jogadores Conectados</h5>
-          <ul id="listaJogadores" class="list-group">
-            <!-- Jogadores serão adicionados aqui via JS -->
-          </ul>
-        </div>
-        <div class="col-md-9">
-          <h5 class="text-center">Mapa Colaborativo</h5>
-          <div id="mapa" class="border p-3 bg-light text-center" style="min-height: 200px;">
-            Área do mapa (em construção)
-          </div>
-        </div>
+    <!-- Tela da Sala de Jogo -->
+    <div id="sala" class="screen hidden">
+      <!-- Área central do mapa -->
+      <div id="mapa" class="map-area">
+        <!-- Canvas e camadas entram aqui -->
       </div>
+
+      <!-- Painel lateral com lista de jogadores -->
+      <div class="sidebar">
+        <h3>Sala: <span id="salaCodigo"></span></h3>
+        <p><strong id="salaNick"></strong> (<span id="salaRole"></span>)</p>
+
+        <h4>Jogadores Conectados:</h4>
+        <ul id="listaJogadores"></ul>
+
+        <button id="btnExportar" class="btn">Exportar Sala (.json)</button>
+        <input type="file" id="inputImportar" accept=".json">
+
+      </div>
+
+      <!-- Botão fixo de desconectar -->
+      <button id="btnSair" class="disconnect-btn">DESCONECTAR</button>
     </div>
 
   </div>
