@@ -1,10 +1,10 @@
 import { iniciarLobby } from './lobby.js';
 import { iniciarSala } from './sala.js';
-import { iniciarSocket } from './socket.js';
+import { Socket } from './socket.js';
 
 // 🚀 Garante que tudo só roda DEPOIS que o DOM estiver 100% pronto
 window.addEventListener('DOMContentLoaded', () => {
-  iniciarSocket();
+  //iniciarSocket();
   iniciarLobby();
   iniciarSala();
 });
