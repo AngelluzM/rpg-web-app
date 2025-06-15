@@ -29,8 +29,10 @@ export function iniciarSala() {
     // Mostrar ou ocultar botão de exportar com base no papel
     if (role === 'host') {
       btnExportar.classList.remove('hidden');
+	  inputImportar.classList.remove('hidden');
     } else {
       btnExportar.classList.add('hidden');
+	  inputImportar.classList.add('hidden');
     }
   });
 
@@ -39,7 +41,7 @@ export function iniciarSala() {
     listaJogadores.innerHTML = '';
     jogadores.forEach(({ nome, papel }) => {
       const li = document.createElement('li');
-      li.textContent = `${nome} ${papel === 'host' ? '(Mestre)' : '(Cliente)'}`;
+      li.textContent = `${nome} ${papel === 'host' ? '(Mestre)' : ''}`;
       listaJogadores.appendChild(li);
     });
   });
