@@ -8,3 +8,21 @@ window.addEventListener('DOMContentLoaded', () => {
   iniciarLobby();
   iniciarSala();
 });
+
+// AUTO-REENTRADA: se tiver dados salvos, reconecta
+const nick = localStorage.getItem('nick');
+const sala = localStorage.getItem('sala');
+const papel = localStorage.getItem('papel');
+const userId = localStorage.getItem('userId') || ('user_' + Math.random().toString(36).substr(2, 9));
+localStorage.setItem('userId', userId);
+
+if (nick && sala && papel) {
+  socket.emit('joinRoom', {
+    roomCode: sala,
+    playerName: nick,
+    role: papel,
+    senha: null,
+    userId,
+    limite: 5  // default, o server ignora se não for host
+  });
+}
