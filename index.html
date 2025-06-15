@@ -48,8 +48,14 @@
         <h4>Jogadores Conectados:</h4>
         <ul id="listaJogadores"></ul>
 
-        <button id="btnExportar" class="btn">Exportar</button>
-        <input type="file" id="inputImportar" class="hidden" accept=".json">
+        <!-- Botão Exportar -->
+		<button id="btnExportar" class="btn hidden">Exportar Sala (.json)</button>
+		
+		<!-- Botão Importar como ícone de pasta -->
+		<label id="labelImportar" class="btn icon-btn hidden">
+		  📁
+			<input type="file" id="inputImportar" accept=".json" hidden>
+		</label>
 
       </div>
 
