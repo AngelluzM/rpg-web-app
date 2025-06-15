@@ -42,8 +42,7 @@ export function iniciarLobby() {
 	
 	console.log("Botão Criar Sala clicado!");
 	console.log("limiteInput:", limiteInput);
-	console.log("Painel Lateral, carregado com HOST!", sidebar);
-
+	
     senhaInput.classList.remove('hidden');
     limiteInput.classList.remove('hidden');
     joinBtn.textContent = 'Confirmar';
