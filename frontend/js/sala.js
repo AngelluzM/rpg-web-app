@@ -15,6 +15,8 @@ export function iniciarSala() {
   const inputImportar = document.getElementById('inputImportar');
   const labelImportar = document.getElementById('labelImportar');
   const statusDiv = document.getElementById('status');
+  const salaCodigoSpan = document.getElementById('salaCodigo');
+  const btnCopyCodigo = document.getElementById('btnCopyCodigo');
   // Abas
 	const tabButtons = document.querySelectorAll('.tab-btn');
 	const tabContents = document.querySelectorAll('.tab-content');
@@ -90,6 +92,19 @@ tabButtons.forEach(btn => {
   btnSair.addEventListener('click', () => {
     limparDadosJogador();
     window.location.reload();
+  });
+
+  // Copiar roomCode
+  btnCopyCodigo.addEventListener('click', () => {
+	const codigo = salaCodigoSpan.textContent.trim();
+	if (codigo) {
+		navigator.clipboard.writeText(codigo).then(() => {
+		btnCopyCodigo.textContent = '✅';
+		setTimeout(() => {
+			btnCopyCodigo.textContent = '📋';
+		}, 1000);
+		});
+	}
   });
 
   // Exportar sala (apenas host)
