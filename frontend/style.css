@@ -60,11 +60,11 @@ input[type=number] {
   margin-top: 10px;
 }
 
-/*.btn {
+.btn {
   cursor: pointer;
   background: #444;
   color: #fff;
-}*/
+}
 
 .btn:hover {
   background: #666;
@@ -195,7 +195,7 @@ input.alerta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
+  width: 100px;
   height: 40px;
   background: #444;
   border: none;
