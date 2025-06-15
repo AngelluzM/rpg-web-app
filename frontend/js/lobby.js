@@ -49,7 +49,7 @@ export function iniciarLobby() {
     joinBtn.textContent = 'Confirmar';
     joinBtn.classList.remove('hidden');
     btnVoltar.classList.remove('hidden');
-	sidebar.classList.remove('hidden');
+	
 
     roomInput.classList.add('hidden');
     btnHost.classList.add('hidden');
@@ -67,7 +67,6 @@ export function iniciarLobby() {
     joinBtn.textContent = 'Confirmar';
     joinBtn.classList.remove('hidden');
     btnVoltar.classList.remove('hidden');	
-	sidebar.classList.remove('hidden');
 
     limiteInput.classList.add('hidden'); // cliente não define limite
 
@@ -84,8 +83,6 @@ export function iniciarLobby() {
     joinBtn.classList.add('hidden');
     btnVoltar.classList.add('hidden');
 	
-	sidebar.classList.add('hidden');
-
     btnHost.classList.remove('hidden');
     btnCliente.classList.remove('hidden');
 
