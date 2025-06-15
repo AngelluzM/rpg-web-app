@@ -14,6 +14,23 @@ export function iniciarSala() {
   const btnExportar = document.getElementById('btnExportar');
   const inputImportar = document.getElementById('inputImportar');
   const statusDiv = document.getElementById('status');
+  // Abas
+const tabButtons = document.querySelectorAll('.tab-btn');
+const tabContents = document.querySelectorAll('.tab-content');
+
+tabButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = btn.getAttribute('data-tab');
+
+    // Remove "active" de todos
+    tabButtons.forEach(b => b.classList.remove('active'));
+    tabContents.forEach(c => c.classList.remove('active'));
+
+    // Ativa clicado
+    btn.classList.add('active');
+    document.getElementById(target).classList.add('active');
+  });
+});
 
   // Ao entrar na sala
   socket.on('joinedRoom', ({ roomCode, playerName, role }) => {
