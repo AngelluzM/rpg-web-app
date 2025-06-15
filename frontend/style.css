@@ -248,6 +248,7 @@ input.alerta {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 10px;
+  height: 200px;
 }
 .sala-actions {
   display: flex;
