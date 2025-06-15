@@ -30,9 +30,11 @@ export function iniciarSala() {
     if (role === 'host') {
       btnExportar.classList.remove('hidden');
 	  inputImportar.classList.remove('hidden');
+	  labelImportar.classList.remove('hidden');
     } else {
       btnExportar.classList.add('hidden');
 	  inputImportar.classList.add('hidden');
+	  labelImportar.classList.add('hidden');
     }
   });
 
