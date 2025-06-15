@@ -146,6 +146,7 @@ input.alerta {
   border-radius: 50%;
   background: #444;
   cursor: pointer;
+  margin-left: 5px;
 }
 
 .icon-btn:hover {
