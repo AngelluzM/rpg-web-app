@@ -15,8 +15,16 @@ export function iniciarSala() {
   const inputImportar = document.getElementById('inputImportar');
   const statusDiv = document.getElementById('status');
   // Abas
-const tabButtons = document.querySelectorAll('.tab-btn');
-const tabContents = document.querySelectorAll('.tab-content');
+	const tabButtons = document.querySelectorAll('.tab-btn');
+	const tabContents = document.querySelectorAll('.tab-content');
+	// ELEMENTOS MODAL
+	const btnAddPdf = document.getElementById('btnAddPdf');
+	const modalAddPdf = document.getElementById('modalAddPdf');
+	const pdfTitulo = document.getElementById('pdfTitulo');
+	const pdfUrl = document.getElementById('pdfUrl');
+	const btnEnviarPdf = document.getElementById('btnEnviarPdf');
+	const btnCancelarPdf = document.getElementById('btnCancelarPdf');
+	const listaCompendium = document.getElementById('listaCompendium');
 
 tabButtons.forEach(btn => {
   btn.addEventListener('click', () => {
@@ -115,6 +123,46 @@ tabButtons.forEach(btn => {
     reader.readAsText(file);
   });
 
+// ABRIR MODAL
+btnAddPdf.addEventListener('click', () => {
+  modalAddPdf.classList.remove('hidden');
+});
+
+// CANCELAR MODAL
+btnCancelarPdf.addEventListener('click', () => {
+  modalAddPdf.classList.add('hidden');
+  pdfTitulo.value = '';
+  pdfUrl.value = '';
+});
+
+// ENVIAR PDF
+btnEnviarPdf.addEventListener('click', () => {
+  const titulo = pdfTitulo.value.trim();
+  const url = pdfUrl.value.trim();
+
+  if (!titulo || !url) {
+    alert("Preencha título e URL!");
+    return;
+  }
+
+  if (!url.includes('drive.google.com') && !url.includes('onedrive.live.com')) {
+    alert("Somente Google Drive ou OneDrive são aceitos!");
+    return;
+  }
+
+  const li = document.createElement('li');
+  const a = document.createElement('a');
+  a.href = url;
+  a.textContent = titulo;
+  a.target = "_blank";
+  li.appendChild(a);
+  listaCompendium.appendChild(li);
+
+  // Limpa e fecha modal
+  pdfTitulo.value = '';
+  pdfUrl.value = '';
+  modalAddPdf.classList.add('hidden');
+});
   // Recebe erros do servidor na sala também
   socket.on('errorMessage', (msg) => {
     showStatus(statusDiv, msg, 'danger');
