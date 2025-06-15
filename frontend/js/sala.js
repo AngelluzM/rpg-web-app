@@ -20,6 +20,7 @@ export function iniciarSala() {
   socket.on('joinedRoom', ({ roomCode, playerName, role }) => {
     lobbyDiv.classList.add('hidden');
     salaDiv.classList.remove('hidden');
+	sidebar.classList.remove('hidden');
 	
 	console.log('✅ Sidebar (sala) VISÍVEL!');
 
@@ -74,6 +75,7 @@ export function iniciarSala() {
   // Botão para desconectar
   btnSair.addEventListener('click', () => {
     limparDadosJogador();
+	sidebar.classList.add('hidden');
     window.location.reload();
   });
 
