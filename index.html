@@ -41,12 +41,35 @@
       </div>
 
       <!-- Painel lateral com lista de jogadores -->
+	  
       <div class="sidebar">
-        <h3>Sala: <span id="salaCodigo"></span></h3>
-        <p><strong id="salaNick"></strong> (<span id="salaRole"></span>)</p>
-
-        <h4>Jogadores Conectados:</h4>
-        <ul id="listaJogadores"></ul>
+	    <h3>Sala: <span id="salaCodigo"></span></h3>
+		  <p><strong id="salaNick"></strong> (<span id="salaRole"></span>)</p>
+		  <!-- Botões de Abas -->
+		    <div class="tab-buttons">
+			    <button class="tab-btn active" data-tab="tab-jogadores">👥</button>
+				<button class="tab-btn" data-tab="tab-personagem">🧙‍♂️</button>
+				<button class="tab-btn" data-tab="tab-compendium">📚</button>
+			</div>
+		  <!-- Conteúdos das Abas -->
+		    <div id="tab-jogadores" class="tab-content active">
+			    <h4>Jogadores Conectados:</h4>
+				    <ul id="listaJogadores"></ul>
+			</div>
+			
+			<div id="tab-personagem" class="tab-content">
+			    <h4>Personagem:</h4>
+				    <p>Aqui vai o resumo e funções do personagem.</p>
+		  <!-- Campos extras depois -->
+	  </div>
+	  
+		<div id="tab-compendium" class="tab-content">
+		    <h4>Compendium:</h4>
+			    <ul id="listaCompendium">
+				<!-- Links para PDFs -->
+				</ul>
+		</div>
+	  </div>
 
         <!-- Botão Exportar -->
 		<button id="btnExportar" class="icon-btn hidden">📤</button>
