@@ -42,12 +42,14 @@ export function iniciarLobby() {
 	
 	console.log("Botão Criar Sala clicado!");
 	console.log("limiteInput:", limiteInput);
+	console.log("Painel Lateral, carregado com HOST!", sidebar);
 
     senhaInput.classList.remove('hidden');
     limiteInput.classList.remove('hidden');
     joinBtn.textContent = 'Confirmar';
     joinBtn.classList.remove('hidden');
     btnVoltar.classList.remove('hidden');
+	sidebar.classList.remove('hidden');
 
     roomInput.classList.add('hidden');
     btnHost.classList.add('hidden');
@@ -64,7 +66,8 @@ export function iniciarLobby() {
     roomInput.classList.remove('hidden');
     joinBtn.textContent = 'Confirmar';
     joinBtn.classList.remove('hidden');
-    btnVoltar.classList.remove('hidden');
+    btnVoltar.classList.remove('hidden');	
+	sidebar.classList.remove('hidden');
 
     limiteInput.classList.add('hidden'); // cliente não define limite
 
@@ -80,6 +83,8 @@ export function iniciarLobby() {
     roomInput.classList.add('hidden');
     joinBtn.classList.add('hidden');
     btnVoltar.classList.add('hidden');
+	
+	sidebar.classList.add('hidden');
 
     btnHost.classList.remove('hidden');
     btnCliente.classList.remove('hidden');
