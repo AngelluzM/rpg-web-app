@@ -64,14 +64,26 @@ tabButtons.forEach(btn => {
   });
 
   // Atualizar lista de jogadores
-  socket.on('updatePlayerList', ({ jogadores }) => {
-    listaJogadores.innerHTML = '';
-    jogadores.forEach(({ nome, papel }) => {
-      const li = document.createElement('li');
-      li.textContent = `${nome} ${papel === 'host' ? '(Mestre)' : ''}`;
-      listaJogadores.appendChild(li);
-    });
-  });
+ socket.on('updatePlayerList', ({ jogadores }) => {
+	    listaJogadores.innerHTML = '';
+		
+	  // Separa host e clientes
+		const host = jogadores.find(j => j.papel === 'host');
+		const clientes = jogadores.filter(j => j.papel !== 'host');
+	  // Primeiro o host
+	    if (host) {
+		    const li = document.createElement('li');
+		    li.textContent = `${host.nome} (Mestre)`;
+		    listaJogadores.appendChild(li);
+		}
+		
+	  // Depois os clientes
+	    clientes.forEach(({ nome }) => {
+	    const li = document.createElement('li');
+		li.textContent = nome; // Não mostra (Cliente), pois já removemos isso!
+		listaJogadores.appendChild(li);
+		});
+});
 
   // Desconectar e limpar tudo
   btnSair.addEventListener('click', () => {
