@@ -251,7 +251,7 @@ input.alerta {
   top: 15px;       /* Ajusta conforme seu layout */
   right: 15px;     /* Cola na lateral direita da sidebar */
   flex-direction: column;
-  gap: 12px;       /* Espaço entre os botões */
+  gap: 6px;       /* Espaço entre os botões */
   z-index: 10;     /* Garante que fiquem na frente */
 }
 
