@@ -14,6 +14,7 @@ export function iniciarLobby() {
   const joinBtn = document.getElementById('joinBtn');
   const btnVoltar = document.getElementById('btnVoltar');
   const statusDiv = document.getElementById('status');
+  const sidebar = document.getElementById('sidebar');
 
   let role = null;
 
