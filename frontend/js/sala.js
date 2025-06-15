@@ -2,196 +2,119 @@ import { socket } from './socket.js';
 import { limparDadosJogador } from './storage.js';
 import { showStatus } from './utils.js';
 
-export function iniciarSala() {
-  // Elementos principais da sala
-  const salaDiv = document.getElementById('sala');
-  const lobbyDiv = document.getElementById('lobby');
-  const salaCodigoSpan = document.getElementById('salaCodigo');
-  const salaNickSpan = document.getElementById('salaNick');
-  const salaRoleSpan = document.getElementById('salaRole');
-  const listaJogadores = document.getElementById('listaJogadores');
-  const btnSair = document.getElementById('btnSair');
-  const btnExportar = document.getElementById('btnExportar');
-  const inputImportar = document.getElementById('inputImportar');
-  const labelImportar = document.getElementById('labelImportar');
-  const statusDiv = document.getElementById('status');
-  const btnCopyCodigo = document.getElementById('btnCopyCodigo');
-  // Abas
-	const tabButtons = document.querySelectorAll('.tab-btn');
-	const tabContents = document.querySelectorAll('.tab-content');
-	// ELEMENTOS MODAL
-	const btnAddPdf = document.getElementById('btnAddPdf');
-	const modalAddPdf = document.getElementById('modalAddPdf');
-	const pdfTitulo = document.getElementById('pdfTitulo');
-	const pdfUrl = document.getElementById('pdfUrl');
-	const btnEnviarPdf = document.getElementById('btnEnviarPdf');
-	const btnCancelarPdf = document.getElementById('btnCancelarPdf');
-	const listaCompendium = document.getElementById('listaCompendium');
+const salaDiv = document.getElementById('sala');
+const lobbyDiv = document.getElementById('lobby');
+const salaCodigoSpan = document.getElementById('salaCodigo');
+const salaNickSpan = document.getElementById('salaNick');
+const salaRoleSpan = document.getElementById('salaRole');
+const listaJogadores = document.getElementById('listaJogadores');
+const btnSair = document.getElementById('btnSair');
+const btnExportar = document.getElementById('btnExportar');
+const labelImportar = document.getElementById('labelImportar');
+const inputImportar = document.getElementById('inputImportar');
+const btnCopyCodigo = document.getElementById('btnCopyCodigo');
+const statusDiv = document.getElementById('status');
 
-tabButtons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const target = btn.getAttribute('data-tab');
+// Quando entra na sala
+socket.on('joinedRoom', ({ roomCode, playerName, role }) => {
+  lobbyDiv.classList.add('hidden');
+  salaDiv.classList.remove('hidden');
 
-    // Remove "active" de todos
-    tabButtons.forEach(b => b.classList.remove('active'));
-    tabContents.forEach(c => c.classList.remove('active'));
+  salaCodigoSpan.textContent = roomCode;
+  salaNickSpan.textContent = playerName;
+  salaRoleSpan.textContent = role.toUpperCase();
 
-    // Ativa clicado
-    btn.classList.add('active');
-    document.getElementById(target).classList.add('active');
+  showStatus(statusDiv, "Conectado à sala!", 'success');
+
+  if (role === 'host') {
+    btnExportar.classList.remove('hidden');
+    labelImportar.classList.remove('hidden');
+  } else {
+    btnExportar.classList.add('hidden');
+    labelImportar.classList.add('hidden');
+  }
+});
+
+// Atualiza a lista de jogadores sempre com o HOST no topo
+socket.on('updatePlayerList', ({ jogadores }) => {
+  listaJogadores.innerHTML = '';
+
+  const host = jogadores.find(j => j.papel === 'host');
+  const clientes = jogadores.filter(j => j.papel !== 'host');
+
+  if (host) {
+    const liHost = document.createElement('li');
+    liHost.textContent = `${host.nome} (Mestre)`;
+    listaJogadores.appendChild(liHost);
+  }
+
+  clientes.forEach(({ nome }) => {
+    const li = document.createElement('li');
+    li.textContent = nome;
+    listaJogadores.appendChild(li);
   });
 });
 
-  // Ao entrar na sala
-  socket.on('joinedRoom', ({ roomCode, playerName, role }) => {
-    lobbyDiv.classList.add('hidden');
-    salaDiv.classList.remove('hidden');
-
-    salaCodigoSpan.textContent = roomCode;
-    salaNickSpan.textContent = playerName;
-    salaRoleSpan.textContent = role.toUpperCase();
-
-    showStatus(statusDiv, "Conectado à sala!", 'success');
-
-    // Mostrar ou ocultar botão de exportar com base no papel
-    if (role === 'host') {
-      btnExportar.classList.remove('hidden');
-	  inputImportar.classList.remove('hidden');
-	  labelImportar.classList.remove('hidden');
-    } else {
-      btnExportar.classList.add('hidden');
-	  inputImportar.classList.add('hidden');
-	  labelImportar.classList.add('hidden');
-    }
-  });
-
-  // Atualizar lista de jogadores
- socket.on('updatePlayerList', ({ jogadores }) => {
-	    listaJogadores.innerHTML = '';
-		
-	  // Separa host e clientes
-		const host = jogadores.find(j => j.papel === 'host');
-		const clientes = jogadores.filter(j => j.papel !== 'host');
-	  // Primeiro o host
-	    if (host) {
-		    const li = document.createElement('li');
-		    li.textContent = `${host.nome} (Mestre)`;
-		    listaJogadores.appendChild(li);
-		}
-		
-	  // Depois os clientes
-	    clientes.forEach(({ nome }) => {
-	    const li = document.createElement('li');
-		li.textContent = nome; // Não mostra (Cliente), pois já removemos isso!
-		listaJogadores.appendChild(li);
-		});
+// Evento de copiar código da sala
+btnCopyCodigo.addEventListener('click', () => {
+  const codigo = salaCodigoSpan.textContent.trim();
+  if (codigo) {
+    navigator.clipboard.writeText(codigo).then(() => {
+      btnCopyCodigo.textContent = '✅';
+      setTimeout(() => {
+        btnCopyCodigo.textContent = '📋';
+      }, 1000);
+    });
+  }
 });
 
-  // Desconectar e limpar tudo
-  btnSair.addEventListener('click', () => {
-    limparDadosJogador();
-    window.location.reload();
-  });
-
-  // Copiar roomCode
-  btnCopyCodigo.addEventListener('click', () => {
-	const codigo = salaCodigoSpan.textContent.trim();
-	if (codigo) {
-		navigator.clipboard.writeText(codigo).then(() => {
-		btnCopyCodigo.textContent = '✅';
-		setTimeout(() => {
-			btnCopyCodigo.textContent = '📋';
-		}, 1000);
-		});
-	}
-  });
-
-  // Exportar sala (apenas host)
-  btnExportar.addEventListener('click', () => {
-    const papel = localStorage.getItem('papel');
-    if (papel !== 'host') {
-      showStatus(statusDiv, "Apenas o Mestre pode exportar a sala!", 'danger');
-      return;
-    }
-
-    const dados = {
-      sala: localStorage.getItem('sala'),
-      host: {
-        userId: localStorage.getItem('userId'),
-        nome: localStorage.getItem('nick')
-      },
-      jogadores: [], // Popular depois com dados reais se quiser
-      mapa: {},      // Idem
-    };
-    const blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `sala-${dados.sala}.json`;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-  });
-
-  // Importar sala JSON (qualquer um pode abrir, só exemplo)
-  inputImportar.addEventListener('change', (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      try {
-        const dados = JSON.parse(e.target.result);
-        showStatus(statusDiv, "Sala importada com sucesso!", 'success');
-        console.log("Dados importados:", dados);
-      } catch {
-        showStatus(statusDiv, "Erro ao importar sala.", 'danger');
-      }
-    };
-    reader.readAsText(file);
-  });
-
-// ABRIR MODAL
-btnAddPdf.addEventListener('click', () => {
-  modalAddPdf.classList.remove('hidden');
+// Botão para desconectar
+btnSair.addEventListener('click', () => {
+  limparDadosJogador();
+  window.location.reload();
 });
 
-// CANCELAR MODAL
-btnCancelarPdf.addEventListener('click', () => {
-  modalAddPdf.classList.add('hidden');
-  pdfTitulo.value = '';
-  pdfUrl.value = '';
-});
-
-// ENVIAR PDF
-btnEnviarPdf.addEventListener('click', () => {
-  const titulo = pdfTitulo.value.trim();
-  const url = pdfUrl.value.trim();
-
-  if (!titulo || !url) {
-    alert("Preencha título e URL!");
+// Exportar sala JSON (exemplo mock)
+btnExportar.addEventListener('click', () => {
+  const papel = localStorage.getItem('papel');
+  if (papel !== 'host') {
+    showStatus(statusDiv, "Apenas o Mestre pode exportar a sala!", 'danger');
     return;
   }
 
-  if (!url.includes('drive.google.com') && !url.includes('onedrive.live.com')) {
-    alert("Somente Google Drive ou OneDrive são aceitos!");
-    return;
-  }
+  const dados = {
+    sala: localStorage.getItem('sala'),
+    host: {
+      userId: localStorage.getItem('userId'),
+      nome: localStorage.getItem('nick')
+    },
+    jogadores: [], // Popular futuramente
+    mapa: {}, // Popular futuramente
+  };
 
-  const li = document.createElement('li');
-  const a = document.createElement('a');
-  a.href = url;
-  a.textContent = titulo;
-  a.target = "_blank";
-  li.appendChild(a);
-  listaCompendium.appendChild(li);
-
-  // Limpa e fecha modal
-  pdfTitulo.value = '';
-  pdfUrl.value = '';
-  modalAddPdf.classList.add('hidden');
+  const blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = `sala-${dados.sala}.json`;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
 });
-  // Recebe erros do servidor na sala também
-  socket.on('errorMessage', (msg) => {
-    showStatus(statusDiv, msg, 'danger');
-  });
-}
+
+// Importar sala JSON (exemplo básico)
+inputImportar.addEventListener('change', (event) => {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const dados = JSON.parse(e.target.result);
+      showStatus(statusDiv, "Sala importada com sucesso!", 'success');
+      console.log("Dados importados:", dados);
+    } catch {
+      showStatus(statusDiv, "Erro ao importar sala.", 'danger');
+    }
+  };
+  reader.readAsText(file);
+});
