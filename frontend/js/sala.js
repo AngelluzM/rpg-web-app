@@ -15,7 +15,6 @@ export function iniciarSala() {
   const inputImportar = document.getElementById('inputImportar');
   const labelImportar = document.getElementById('labelImportar');
   const statusDiv = document.getElementById('status');
-  const salaCodigoSpan = document.getElementById('salaCodigo');
   const btnCopyCodigo = document.getElementById('btnCopyCodigo');
   // Abas
 	const tabButtons = document.querySelectorAll('.tab-btn');
