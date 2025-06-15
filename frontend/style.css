@@ -266,3 +266,8 @@ input.alerta {
 .sala-actions .icon-btn {
   margin: 0;
 }
+
+#btnCopyCodigo {
+  margin-left: 6px;
+  vertical-align: middle;
+}
