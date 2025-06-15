@@ -1,4 +1,7 @@
-/* Básico geral */
+/* ============================
+   🌙 DARK MODE - ESTILO BASE
+   ============================ */
+
 body.dark-mode {
   margin: 0;
   padding: 0;
@@ -14,7 +17,10 @@ body.dark-mode {
   height: 100vh;
 }
 
-/* Telas (lobby e sala) */
+/* ============================
+   📌 TELAS PRINCIPAIS
+   ============================ */
+
 .screen {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -26,6 +32,10 @@ body.dark-mode {
 .hidden {
   display: none !important;
 }
+
+/* ============================
+   🗂️ FORM LOBBY
+   ============================ */
 
 .form-container {
   background: #111;
@@ -44,6 +54,12 @@ input, .btn {
   font-size: 16px;
 }
 
+input[type=number] {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 10px;
+}
+
 .btn {
   cursor: pointer;
   background: #444;
@@ -54,6 +70,15 @@ input, .btn {
   background: #666;
 }
 
+.alert-msg {
+  color: #ff5555;
+  font-size: 14px;
+}
+
+input.alerta {
+  border: 2px solid #ff5555;
+}
+
 .status-msg {
   padding: 8px;
   border-radius: 4px;
@@ -61,7 +86,10 @@ input, .btn {
   font-size: 14px;
 }
 
-/* Área do Mapa */
+/* ============================
+   🗺️ ÁREA DO MAPA
+   ============================ */
+
 .map-area {
   width: 100%;
   height: 100%;
@@ -69,14 +97,17 @@ input, .btn {
   overflow: hidden;
 }
 
-/* Sidebar (lista jogadores e ações) */
+/* ============================
+   📑 SIDEBAR COM ABAS
+   ============================ */
+
 .sidebar {
   position: absolute;
   top: 0;
   right: 0;
-  width: 200px;
+  width: 250px;
   height: 100%;
-  background: rgba(20,20,20,0.9);
+  background: rgba(20,20,20,0.95);
   padding: 15px;
   overflow-y: auto;
 }
@@ -85,23 +116,37 @@ input, .btn {
   margin: 5px 0;
 }
 
-input[type=number] {
-  padding: 8px;
-  border-radius: 4px;
+.tab-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
+}
+
+.tab-btn {
+  background: #444;
   border: none;
-  font-size: 16px;
-  width: 100%;
-  box-sizing: border-box;
-  margin-top: 10px;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 18px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
-.alert-msg {
-  color: #ff5555;
-  font-size: 14px;
+.tab-btn.active {
+  background: #666;
 }
 
-input.alerta {
-  border: 2px solid #ff5555;
+.tab-btn:hover {
+  background: #555;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
 }
 
 .sidebar ul {
@@ -117,7 +162,10 @@ input.alerta {
   border-radius: 3px;
 }
 
-/* Botão Desconectar */
+/* ============================
+   🚪 BOTÃO DESCONECTAR
+   ============================ */
+
 .disconnect-btn {
   position: absolute;
   bottom: 20px;
@@ -125,15 +173,23 @@ input.alerta {
   background: #ccc;
   color: #333;
   border: none;
-  border-radius: 4px;
-  padding: 10px 20px;
-  font-weight: bold;
+  border-radius: 50%;  /* Redondo agora */
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
 }
 
 .disconnect-btn:hover {
   background: #aaa;
 }
+
+/* ============================
+   📤📁 BOTÕES ICÔNEOS (EXPORT/IMPORT)
+   ============================ */
 
 .icon-btn {
   display: inline-flex;
@@ -143,9 +199,11 @@ input.alerta {
   height: 40px;
   background: #444;
   border: none;
+  border-radius: 50%;
   cursor: pointer;
+  font-size: 20px;
   transition: background 0.2s;
-  margin-right: 2px;
+  margin-right: 5px;
 }
 
 .icon-btn:hover {
