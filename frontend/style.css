@@ -195,13 +195,13 @@ input.alerta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 170px;
+  width: 40px;
   height: 40px;
   background: #444;
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  font-size: 20px;
+/*  font-size: 20px;*/
   transition: background 0.2s;
   margin-right: 5px;
 }
