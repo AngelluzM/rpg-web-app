@@ -7,86 +7,100 @@
   <link rel="stylesheet" href="frontend/style.css" />
 </head>
 <body class="dark-mode">
-  <div id="container-geral">
+	<div id="container-geral">
 
-    <!-- Tela inicial (Lobby) -->
-    <div id="lobby" class="screen">
-  <div class="form-container">
-    <h1>RPG Web App</h1>
+		<!-- Tela inicial (Lobby) -->
+		<div id="lobby" class="screen">
+			<div class="form-container">
+				<h1>RPG Web App</h1>
 
-    <input type="text" id="nickName" placeholder="Digite seu apelido" maxlength="15" />
-    <div id="nickAlerta" class="alert-msg hidden">* obrigatório definir um nick</div>
+				<input type="text" id="nickName" placeholder="Digite seu apelido" maxlength="15" />
+				<div id="nickAlerta" class="alert-msg hidden">* obrigatório definir um nick</div>
 
-    <button id="btnHost" class="btn">Criar Sala</button>
-    <button id="btnCliente" class="btn">Acessar Sala</button>
+					<button id="btnHost" class="btn">Criar Sala</button>
+					<button id="btnCliente" class="btn">Acessar Sala</button>
 
-    <input type="text" id="roomCode" class="hidden" placeholder="Código da Sala" />
-    <input type="password" id="roomPassword" class="hidden" placeholder="Senha da Sala (opcional)" />
-	<input type="number" id="limiteJogadores" class="hidden" placeholder="Limite de Jogadores" min="1" max="20" value="5" />
-
-
-    <button id="joinBtn" class="btn hidden">Confirmar</button>
-    <button id="btnVoltar" class="btn hidden">Voltar</button>
-
-    <div id="status" class="status-msg hidden"></div>
-  </div>
-</div>
+					<input type="text" id="roomCode" class="hidden" placeholder="Código da Sala" />
+					<input type="password" id="roomPassword" class="hidden" placeholder="Senha da Sala (opcional)" />
+					<input type="number" id="limiteJogadores" class="hidden" placeholder="Limite de Jogadores" min="1" max="20" value="5" />
 
 
-    <!-- Tela da Sala de Jogo -->
-    <div id="sala" class="screen hidden">
-      <!-- Área central do mapa -->
-      <div id="mapa" class="map-area">
-        <!-- Canvas e camadas entram aqui -->
-      </div>
+					<button id="joinBtn" class="btn hidden">Confirmar</button>
+					<button id="btnVoltar" class="btn hidden">Voltar</button>
 
-      <!-- Painel lateral com lista de jogadores -->
-	  
-      <div class="sidebar">
-	    <h3>Sala: <span id="salaCodigo"></span></h3>
-		  <p><strong id="salaNick"></strong> (<span id="salaRole"></span>)</p>
-		  <!-- Botões de Abas -->
-		    <div class="tab-buttons">
-			    <button class="tab-btn active" data-tab="tab-jogadores">👥</button>
-				<button class="tab-btn" data-tab="tab-personagem">🧙‍♂️</button>
-				<button class="tab-btn" data-tab="tab-compendium">📚</button>
+				<div id="status" class="status-msg hidden"></div>
 			</div>
-		  <!-- Conteúdos das Abas -->
-		    <div id="tab-jogadores" class="tab-content active">
-			    <h4>Jogadores Conectados:</h4>
-				    <ul id="listaJogadores"></ul>
-			</div>
-			
-			<div id="tab-personagem" class="tab-content">
-			    <h4>Personagem:</h4>
-				    <p>Aqui vai o resumo e funções do personagem.</p>
-		  <!-- Campos extras depois -->
-	  </div>
-	  
-		<div id="tab-compendium" class="tab-content">
-		    <h4>Compendium:</h4>
-			    <ul id="listaCompendium">
-				<!-- Links para PDFs -->
-				</ul>
 		</div>
-	  </div>
 
-        <!-- Botão Exportar -->
-		<button id="btnExportar" class="icon-btn hidden">📤</button>
+
+		<!-- Tela da Sala de Jogo -->
+		<div id="sala" class="screen hidden">
+			<!-- Área central do mapa -->
+			<div id="mapa" class="map-area">
+			<!-- Canvas e camadas entram aqui -->
+			</div>
+
+			<!-- Painel lateral com lista de jogadores -->
+	  
+			<div class="sidebar">
+				<h3>Sala: <span id="salaCodigo"></span></h3>
+					<p><strong id="salaNick"></strong> (<span id="salaRole"></span>)</p>
+				<!-- Botões de Abas -->
+				<div class="tab-buttons">
+					<button class="tab-btn active" data-tab="tab-jogadores">👥</button>
+					<button class="tab-btn" data-tab="tab-personagem">🧙‍♂️</button>
+					<button class="tab-btn" data-tab="tab-compendium">📚</button>
+				</div>
+				<!-- Conteúdos das Abas -->
+				<div id="tab-jogadores" class="tab-content active">
+					<h4>Jogadores Conectados:</h4>
+						<ul id="listaJogadores"></ul>
+				</div>
+			
+				<div id="tab-personagem" class="tab-content">
+					<h4>Personagem:</h4>
+						<p>Aqui vai o resumo e funções do personagem.</p>
+					<!-- Campos extras depois -->
+				</div>
+	  
+				<div id="tab-compendium" class="tab-content">
+					<h4>Compendium:</h4>
+						<ul id="listaCompendium">
+						<!-- Links para PDFs -->
+						</ul>
+					<!-- Botão Adicionar -->
+					<button id="btnAddPdf" class="btn">➕</button>
+				
+				</div>
+			
+			</div>
+
+			<!-- Botão Exportar -->
+			<button id="btnExportar" class="icon-btn hidden">📤</button>
 		
-		<!-- Botão Importar como ícone de pasta -->
-		<label id="labelImportar" class="icon-btn hidden">
-		  📁
-			<input type="file" id="inputImportar" accept=".json" hidden>
-		</label>
+			<!-- Botão Importar como ícone de pasta -->
+			<label id="labelImportar" class="icon-btn hidden">📁
+				<input type="file" id="inputImportar" accept=".json" hidden>
+			</label>
 
-      </div>
+		</div>
 
       <!-- Botão fixo de desconectar -->
       <button id="btnSair" class="disconnect-btn">DESCONECTAR</button>
     </div>
 
-  </div>
+	<!-- Modal Adicionar PDF -->
+	<div id="modalAddPdf" class="modal hidden">
+		<div class="modal-content">
+			<h3>Adicionar PDF</h3>
+			<input type="text" id="pdfTitulo" placeholder="Título do PDF">
+			<input type="url" id="pdfUrl" placeholder="URL do Google Drive/OneDrive">
+			<div class="modal-actions">
+				<button id="btnEnviarPdf" class="btn">Enviar</button>
+				<button id="btnCancelarPdf" class="btn">Cancelar</button>
+			</div>
+		</div>
+	</div>
 
   <script src="/socket.io/socket.io.js"></script>
   <script type="module" src="frontend/js/main.js" defer></script>
