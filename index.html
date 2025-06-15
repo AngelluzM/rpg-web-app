@@ -40,12 +40,15 @@
 			<!-- Canvas e camadas entram aqui -->
 			</div>
 
-			<!-- Painel lateral com lista de jogadores -->
+			<!-- Painel lateral -->
 	  
 			<div class="sidebar">
-				<h3>Sala: <span id="salaCodigo"></span></h3>
-					<p><strong id="salaNick"></strong> (<span id="salaRole"></span>)</p>
-					<div class="sala-actions">
+				<!-- CAMPO DE DADOS DA SALA -->
+				<div class="sala-info">
+					<h3>Sala: <span id="salaCodigo"></span></h3>
+						<p><strong id="salaNick"></strong> (<span id="salaRole"></span>)</p>
+				</div>
+				<div class="sala-actions">
 							<!-- Botão Exportar -->
 							<button id="btnExportar" class="icon-btn hidden" title="Exportar Sala">📤</button>
 		
@@ -53,7 +56,8 @@
 							<label id="labelImportar" class="icon-btn hidden" title="Importar Sala">📁
 								<input type="file" id="inputImportar" accept=".json" hidden>
 							</label>
-					</div>
+				</div>
+				
 					
 				<!-- Botões de Abas -->
 				<div class="tab-buttons">
