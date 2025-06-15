@@ -45,6 +45,14 @@
 			<div class="sidebar">
 				<h3>Sala: <span id="salaCodigo"></span></h3>
 					<p><strong id="salaNick"></strong> (<span id="salaRole"></span>)</p>
+					<!-- Botão Exportar -->
+					<button id="btnExportar" class="icon-btn hidden">📤</button>
+		
+					<!-- Botão Importar como ícone de pasta -->
+					<label id="labelImportar" class="icon-btn hidden">📁
+						<input type="file" id="inputImportar" accept=".json" hidden>
+					</label>
+					
 				<!-- Botões de Abas -->
 				<div class="tab-buttons">
 					<button class="tab-btn active" data-tab="tab-jogadores">👥</button>
@@ -78,13 +86,7 @@
 
 		</div>
 
-			<!-- Botão Exportar -->
-			<button id="btnExportar" class="icon-btn hidden">📤</button>
-		
-			<!-- Botão Importar como ícone de pasta -->
-			<label id="labelImportar" class="icon-btn hidden">📁
-				<input type="file" id="inputImportar" accept=".json" hidden>
-			</label>
+			
       <!-- Botão fixo de desconectar -->
       <button id="btnSair" class="disconnect-btn">DESCONECTAR</button>
     </div>
