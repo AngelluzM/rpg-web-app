@@ -257,12 +257,14 @@ input.alerta {
   justify-content: flex-end;
   margin-bottom: 10px;
   position: absolute;
-  top: 15px;       /* Ajusta conforme seu layout */
+  top: 65px;       /* Ajusta conforme seu layout */
   right: 15px;     /* Cola na lateral direita da sidebar */
-  flex-direction: column;
-  gap: 6px;       /* Espaço entre os botões */
+  /*flex-direction: column;*/
+  gap: 15px;       /* Espaço entre os botões */
   z-index: 10;     /* Garante que fiquem na frente */
 }
+
+.sala-actions
 
 .sala-actions .icon-btn {
   margin: 0;
