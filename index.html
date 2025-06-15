@@ -7,111 +7,106 @@
   <link rel="stylesheet" href="frontend/style.css" />
 </head>
 <body class="dark-mode">
-	<div id="container-geral">
 
-		<!-- Tela inicial (Lobby) -->
-		<div id="lobby" class="screen">
-			<div class="form-container">
-				<h1>RPG Web App</h1>
+  <div id="container-geral">
 
-				<input type="text" id="nickName" placeholder="Digite seu apelido" maxlength="15" />
-				<div id="nickAlerta" class="alert-msg hidden">* obrigatório definir um nick</div>
+    <!-- 🔹 ÁREA PRINCIPAL (LOBBY ou MAPA) -->
+    <div class="main-content">
 
-					<button id="btnHost" class="btn">Criar Sala</button>
-					<button id="btnCliente" class="btn">Acessar Sala</button>
+      <!-- 📌 Tela Lobby -->
+      <div id="lobby" class="screen">
+        <div class="form-container">
+          <h1>RPG Web App</h1>
 
-					<input type="text" id="roomCode" class="hidden" placeholder="Código da Sala" />
-					<input type="password" id="roomPassword" class="hidden" placeholder="Senha da Sala (opcional)" />
-					<input type="number" id="limiteJogadores" class="hidden" placeholder="Limite de Jogadores" min="1" max="20" value="5" />
+          <input type="text" id="nickName" placeholder="Digite seu apelido" maxlength="15" />
+          <div id="nickAlerta" class="alert-msg hidden">* obrigatório definir um nick</div>
 
+          <button id="btnHost" class="btn">Criar Sala</button>
+          <button id="btnCliente" class="btn">Acessar Sala</button>
 
-					<button id="joinBtn" class="btn hidden">Confirmar</button>
-					<button id="btnVoltar" class="btn hidden">Voltar</button>
+          <input type="text" id="roomCode" class="hidden" placeholder="Código da Sala" />
+          <input type="password" id="roomPassword" class="hidden" placeholder="Senha da Sala (opcional)" />
+          <input type="number" id="limiteJogadores" class="hidden" placeholder="Limite de Jogadores" min="1" max="20" value="5" />
 
-				<div id="status" class="status-msg hidden"></div>
-			</div>
-		</div>
+          <button id="joinBtn" class="btn hidden">Confirmar</button>
+          <button id="btnVoltar" class="btn hidden">Voltar</button>
 
+          <div id="status" class="status-msg hidden"></div>
+        </div>
+      </div>
 
-		<!-- Tela da Sala de Jogo -->
-		<div id="sala" class="screen hidden">
-			<!-- Área central do mapa -->
-			<div id="mapa" class="map-area">
-			<!-- Canvas e camadas entram aqui -->
-			</div>
+      <!-- 📌 Tela Sala de Jogo -->
+      <div id="sala" class="screen hidden">
+        <!-- 🗺️ Área do Mapa -->
+        <div id="mapa" class="map-area">
+          <!-- Canvas e camadas futuras -->
+        </div>
+      </div>
 
-			<!-- Painel lateral -->
-	  
-			<div class="sidebar">
-				<!-- CAMPO DE DADOS DA SALA -->
-				<div class="sala-info">
-					<h3>Sala: <span id="salaCodigo"></span></h3>
-					<button id="btnCopyCodigo" class="icon-btn" title="Copiar código da sala">📋</button>
-						<p><strong id="salaNick"></strong> (<span id="salaRole"></span>)</p>
-				</div>
-				<div class="sala-actions">
-							<!-- Botão Exportar -->
-							<button id="btnExportar" class="icon-btn hidden" title="Exportar Sala">📤</button>
-		
-							<!-- Botão Importar como ícone de pasta -->
-							<label id="labelImportar" class="icon-btn hidden" title="Importar Sala">📁
-								<input type="file" id="inputImportar" accept=".json" hidden>
-							</label>
-				</div>
-				
-					
-				<!-- Botões de Abas -->
-				<div class="tab-buttons">
-					<button class="tab-btn active" data-tab="tab-jogadores">👥</button>
-					<button class="tab-btn" data-tab="tab-personagem">🧙‍♂️</button>
-					<button class="tab-btn" data-tab="tab-compendium">📚</button>
-				</div>
-				<!-- Conteúdos das Abas -->
-				<div id="tab-jogadores" class="tab-content active">
-					<h4>Jogadores Conectados:</h4>
-						<ul id="listaJogadores"></ul>
-				</div>
-			
-				<div id="tab-personagem" class="tab-content">
-					<h4>Personagem:</h4>
-						<p>Aqui vai o resumo e funções do personagem.</p>
-					<!-- Campos extras depois -->
-				</div>
-	  
-				<div id="tab-compendium" class="tab-content">
-					<h4>Compendium:</h4>
-						<ul id="listaCompendium">
-						<!-- Links para PDFs -->
-						</ul>
-					<!-- Botão Adicionar -->
-					<button id="btnAddPdf" class="btn">➕</button>
-				
-				</div>
-			
-			</div>
+    </div>
 
+    <!-- 🔹 SIDEBAR FIXA -->
+    <div class="sidebar hidden">
+      <!-- Info da Sala -->
+      <div class="sala-info">
+        <h3>Sala: <span id="salaCodigo"></span></h3>
+        <button id="btnCopyCodigo" class="icon-btn" title="Copiar código da sala">📋</button>
+        <p><strong id="salaNick"></strong> (<span id="salaRole"></span>)</p>
+      </div>
 
-		</div>
+      <!-- Ações rápidas -->
+      <div class="sala-actions">
+        <button id="btnExportar" class="icon-btn hidden" title="Exportar Sala">📤</button>
+        <label id="labelImportar" class="icon-btn hidden" title="Importar Sala">📁
+          <input type="file" id="inputImportar" accept=".json" hidden>
+        </label>
+      </div>
 
-			
+      <!-- Botões de Abas -->
+      <div class="tab-buttons">
+        <button class="tab-btn active" data-tab="tab-jogadores">👥</button>
+        <button class="tab-btn" data-tab="tab-personagem">🧙‍♂️</button>
+        <button class="tab-btn" data-tab="tab-compendium">📚</button>
+      </div>
+
+      <!-- Conteúdo das Abas -->
+      <div id="tab-jogadores" class="tab-content active">
+        <h4>Jogadores Conectados:</h4>
+        <ul id="listaJogadores"></ul>
+      </div>
+
+      <div id="tab-personagem" class="tab-content">
+        <h4>Personagem:</h4>
+        <p>Aqui vai o resumo e funções do personagem.</p>
+      </div>
+
+      <div id="tab-compendium" class="tab-content">
+        <h4>Compendium:</h4>
+        <ul id="listaCompendium"></ul>
+        <button id="btnAddPdf" class="btn">➕</button>
+      </div>
+
       <!-- Botão fixo de desconectar -->
       <button id="btnSair" class="disconnect-btn">DESCONECTAR</button>
     </div>
 
-	<!-- Modal Adicionar PDF -->
-	<div id="modalAddPdf" class="modal hidden">
-		<div class="modal-content">
-			<h3>Adicionar PDF</h3>
-			<input type="text" id="pdfTitulo" placeholder="Título do PDF">
-			<input type="url" id="pdfUrl" placeholder="URL do Google Drive/OneDrive">
-			<div class="modal-actions">
-				<button id="btnEnviarPdf" class="btn">Enviar</button>
-				<button id="btnCancelarPdf" class="btn">Cancelar</button>
-			</div>
-		</div>
-	</div>
+  </div>
+
+  <!-- 🔹 MODAL Adicionar PDF -->
+  <div id="modalAddPdf" class="modal hidden">
+    <div class="modal-content">
+      <h3>Adicionar PDF</h3>
+      <input type="text" id="pdfTitulo" placeholder="Título do PDF">
+      <input type="url" id="pdfUrl" placeholder="URL do Google Drive/OneDrive">
+      <div class="modal-actions">
+        <button id="btnEnviarPdf" class="btn">Enviar</button>
+        <button id="btnCancelarPdf" class="btn">Cancelar</button>
+      </div>
+    </div>
+  </div>
 
   <script src="/socket.io/socket.io.js"></script>
   <script type="module" src="frontend/js/main.js" defer></script>
+
 </body>
 </html>
