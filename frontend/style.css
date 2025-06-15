@@ -145,7 +145,7 @@ input.alerta {
   border: none;
   cursor: pointer;
   transition: background 0.2s;
-  margin-right: 10px;
+  margin-right: 2px;
 }
 
 .icon-btn:hover {
