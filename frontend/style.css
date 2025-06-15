@@ -244,11 +244,12 @@ input.alerta {
 }
 
 .sala-info {
-  top: 15px;
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 10px;
-  height: 200px;
+    top: 15px;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+    height: 90px;
+    flex-direction: column;
 }
 .sala-actions {
   display: flex;
