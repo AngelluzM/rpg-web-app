@@ -242,3 +242,14 @@ input.alerta {
 .modal.hidden {
   display: none;
 }
+
+.sala-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.sala-actions .icon-btn {
+  margin: 0;
+}
