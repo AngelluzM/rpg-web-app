@@ -12,18 +12,25 @@ body.dark-mode {
 }
 
 #container-geral {
-  position: relative;
+  display: flex; /* O truque mágico pra sidebar + conteúdo */
   width: 100vw;
   height: 100vh;
+  position: relative;
 }
 
 /* ============================
-   📌 TELAS PRINCIPAIS
+   📌 ÁREA PRINCIPAL DE CONTEÚDO
    ============================ */
+
+.main-content {
+  flex: 1; /* Pega TODO o espaço restante */
+  position: relative;
+  overflow: hidden;
+}
 
 .screen {
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
+  inset: 0; /* igual a top:0; left:0; right:0; bottom:0 */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,7 +41,71 @@ body.dark-mode {
 }
 
 /* ============================
-   🗂️ FORM LOBBY
+   📑 SIDEBAR FIXA
+   ============================ */
+
+.sidebar {
+  width: 250px;
+  background: rgba(20,20,20,0.95);
+  overflow-y: auto;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar h3,
+.sidebar h4 {
+  margin: 5px 0;
+}
+
+.tab-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
+}
+
+.tab-btn {
+  background: #444;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 18px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.tab-btn.active {
+  background: #666;
+}
+
+.tab-btn:hover {
+  background: #555;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.sidebar ul li {
+  padding: 4px;
+  background: #333;
+  margin-bottom: 5px;
+  border-radius: 3px;
+}
+
+/* ============================
+   🗂️ FORMULÁRIOS E ELEMENTOS GERAIS
    ============================ */
 
 .form-container {
@@ -87,89 +158,10 @@ input.alerta {
 }
 
 /* ============================
-   🗺️ ÁREA DO MAPA
-   ============================ */
-
-.map-area {
-  width: 100%;
-  height: 100%;
-  background-color: #0e0e0e;
-  overflow: hidden;
-}
-
-/* ============================
-   📑 SIDEBAR COM ABAS
-   ============================ */
-
-.sidebar {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 250px;
-  height: 100%;
-  background: rgba(20,20,20,0.95);
-  padding: 15px;
-  overflow-y: auto;
-}
-
-.sidebar h3, .sidebar h4 {
-  margin: 5px 0;
-}
-
-.tab-buttons {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 10px;
-}
-
-.tab-btn {
-  background: #444;
-  border: none;
-  border-radius: 5px;
-  color: #fff;
-  font-size: 18px;
-  padding: 5px 10px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.tab-btn.active {
-  background: #666;
-}
-
-.tab-btn:hover {
-  background: #555;
-}
-
-.tab-content {
-  display: none;
-}
-
-.tab-content.active {
-  display: block;
-}
-
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-  margin-top: 10px;
-}
-
-.sidebar ul li {
-  padding: 4px;
-  background: #333;
-  margin-bottom: 5px;
-  border-radius: 3px;
-}
-
-/* ============================
    🚪 BOTÃO DESCONECTAR
    ============================ */
 
 .disconnect-btn {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
   background: #ccc;
   color: #333;
   border: none;
@@ -181,6 +173,7 @@ input.alerta {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  margin-top: auto; /* Cola no final da sidebar */
 }
 
 .disconnect-btn:hover {
@@ -188,7 +181,7 @@ input.alerta {
 }
 
 /* ============================
-   📤📁 BOTÕES ICÔNEOS (EXPORT/IMPORT)
+   📤📁 BOTÕES ICÔNEOS
    ============================ */
 
 .icon-btn {
@@ -201,7 +194,6 @@ input.alerta {
   border: none;
   border-radius: 50%;
   cursor: pointer;
-/*  font-size: 20px;*/
   transition: background 0.2s;
   margin-right: 5px;
 }
@@ -209,9 +201,14 @@ input.alerta {
 .icon-btn:hover {
   background: #666;
 }
+
+/* ============================
+   🗂️ MODAIS
+   ============================ */
+
 .modal {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
+  inset: 0;
   background: rgba(0,0,0,0.7);
   display: flex;
   justify-content: center;
@@ -243,32 +240,18 @@ input.alerta {
   display: none;
 }
 
+/* ============================
+   📌 INFO E ACTIONS
+   ============================ */
+
 .sala-info {
-    top: 15px;
-	position: absolute;
-    display: inline-flex;
-    justify-content: flex-end;
-    margin-bottom: 10px;
-    height: 90px;
-    flex-direction: column;
+  margin-bottom: 10px;
 }
 
 .sala-actions {
-  display: inline-flex;
+  display: flex;
   justify-content: flex-end;
-  margin-bottom: 10px;
-  position: absolute;
-  top: 15px;       /* Ajusta conforme seu layout */
-  right: 15px;     /* Cola na lateral direita da sidebar */
-  flex-direction: column;
-  gap: 15px;       /* Espaço entre os botões */
-  z-index: 10;     /* Garante que fiquem na frente */
-}
-
-.sala-actions
-
-.sala-actions .icon-btn {
-  margin: 0;
+  gap: 15px;
 }
 
 #btnCopyCodigo {
