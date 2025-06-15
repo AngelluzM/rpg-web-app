@@ -91,35 +91,38 @@ export function iniciarLobby() {
   });
 
   // Botão Confirmar
-  joinBtn.addEventListener('click', () => {
-    const nick = nickInput.value.trim();
-    const senha = senhaInput.value.trim() || null;
-    let roomCode = roomInput.value.trim();
-    let limite = parseInt(limiteInput.value, 10) || 5;
+joinBtn.addEventListener('click', () => {
+  const nick = nickInput.value.trim();
+  const senha = senhaInput.value.trim() || null;
+  let roomCode = roomInput.value.trim();
+  const limite = parseInt(limiteInput.value, 10) || 5;
+  const userId = localStorage.getItem('userId') || ('user_' + Math.random().toString(36).substr(2, 9));
+  localStorage.setItem('userId', userId);
 
-    if (!nick) {
-      showStatus(statusDiv, "Informe um nick válido.", 'danger');
-      return;
-    }
+  if (!nick) {
+    showStatus(statusDiv, "Informe um nick válido.", 'danger');
+    return;
+  }
 
-    if (role === 'host') {
-      roomCode = gerarCodigoSala();
-    }
+  if (role === 'host') {
+    roomCode = gerarCodigoSala();
+  }
 
-    if (role === 'cliente' && roomCode.length < 6) {
-      showStatus(statusDiv, "Código da sala inválido.", 'danger');
-      return;
-    }
+  if (role === 'cliente' && roomCode.length < 6) {
+    showStatus(statusDiv, "Código da sala inválido.", 'danger');
+    return;
+  }
 
-    salvarDadosJogador({ nick, sala: roomCode, papel: role });
+  salvarDadosJogador({ nick, sala: roomCode, papel: role });
 
-    socket.emit('joinRoom', {
-      roomCode,
-      playerName: nick,
-      role,
-      senha,
-      userId: localStorage.getItem('userId'),
-      limite
-    });
+  socket.emit('joinRoom', {
+    roomCode,
+    playerName: nick,
+    role,
+    senha,
+    userId,
+    limite
   });
+});
+
 }
