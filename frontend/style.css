@@ -243,6 +243,12 @@ input.alerta {
   display: none;
 }
 
+.sala-info {
+  top: 15px;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
 .sala-actions {
   display: flex;
   justify-content: flex-end;
