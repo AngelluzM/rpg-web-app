@@ -251,6 +251,7 @@ input.alerta {
     height: 90px;
     flex-direction: column;
 }
+
 .sala-actions {
   display: flex;
   justify-content: flex-end;
