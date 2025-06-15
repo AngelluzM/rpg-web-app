@@ -13,6 +13,7 @@ export function iniciarSala() {
   const btnSair = document.getElementById('btnSair');
   const btnExportar = document.getElementById('btnExportar');
   const inputImportar = document.getElementById('inputImportar');
+  const labelImportar = document.getElementById('labelImportar');
   const statusDiv = document.getElementById('status');
   // Abas
 	const tabButtons = document.querySelectorAll('.tab-btn');
