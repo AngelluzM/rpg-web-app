@@ -20,6 +20,8 @@ export function iniciarSala() {
   socket.on('joinedRoom', ({ roomCode, playerName, role }) => {
     lobbyDiv.classList.add('hidden');
     salaDiv.classList.remove('hidden');
+	
+	console.log('✅ Sidebar (sala) VISÍVEL!');
 
     salaCodigoSpan.textContent = roomCode;
     salaNickSpan.textContent = playerName;
