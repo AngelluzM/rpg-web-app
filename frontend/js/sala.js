@@ -11,7 +11,7 @@ export function iniciarSala() {
   const listaJogadores = document.getElementById('listaJogadores');
   const btnSair = document.getElementById('btnSair');
   const btnExportar = document.getElementById('btnExportar');
-  const labelImportar = document.getElementById('labelImportar');
+  const bntImportar = document.getElementById('bntImportar');
   const inputImportar = document.getElementById('inputImportar');
   const btnCopyCodigo = document.getElementById('btnCopyCodigo');
   const statusDiv = document.getElementById('status');
@@ -32,10 +32,10 @@ export function iniciarSala() {
 
     if (role === 'host') {
       btnExportar.classList.remove('hidden');
-      labelImportar.classList.remove('hidden');
+      bntImportar.classList.remove('hidden');
     } else {
       btnExportar.classList.add('hidden');
-      labelImportar.classList.add('hidden');
+      bntImportar.classList.add('hidden');
     }
   });
 
@@ -106,7 +106,12 @@ export function iniciarSala() {
     link.remove();
   });
 
-  // Importar sala JSON (exemplo básico)
+// 1️⃣ O botão dispara o input:
+btnImportar.addEventListener('click', () => {
+  inputImportar.click();
+});
+
+// 2️⃣ O input faz a mágica quando o arquivo for escolhido:
   inputImportar.addEventListener('change', (event) => {
     const file = event.target.files[0];
     if (!file) return;
