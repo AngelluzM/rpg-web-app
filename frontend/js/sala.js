@@ -26,7 +26,7 @@ export function iniciarSala() {
 
     salaCodigoSpan.textContent = roomCode;
     //salaNickSpan.textContent = playerName;
-    salaRoleSpan.textContent = role.toUpperCase();
+    //salaRoleSpan.textContent = role.toUpperCase();
 
     showStatus(statusDiv, "Conectado à sala!", 'success');
 
