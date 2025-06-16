@@ -11,10 +11,11 @@ export function iniciarSala() {
   const listaJogadores = document.getElementById('listaJogadores');
   const btnSair = document.getElementById('btnSair');
   const btnExportar = document.getElementById('btnExportar');
-  const bntImportar = document.getElementById('bntImportar');
+  const btnImportar = document.getElementById('btnImportar');
   const inputImportar = document.getElementById('inputImportar');
   const btnCopyCodigo = document.getElementById('btnCopyCodigo');
   const statusDiv = document.getElementById('status');
+  const sidebar = document.getElementById('sidebar')
 
   // Quando entra na sala
   socket.on('joinedRoom', ({ roomCode, playerName, role }) => {
@@ -32,10 +33,10 @@ export function iniciarSala() {
 
     if (role === 'host') {
       btnExportar.classList.remove('hidden');
-      bntImportar.classList.remove('hidden');
+      btnImportar.classList.remove('hidden');
     } else {
       btnExportar.classList.add('hidden');
-      bntImportar.classList.add('hidden');
+      btnImportar.classList.add('hidden');
     }
   });
 
