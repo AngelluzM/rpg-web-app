@@ -239,8 +239,8 @@ input.alerta {
 
 .sala-actions {
   display: flex;
-  flex-direction: column;  /* Botões um embaixo do outro */
-  align-items: flex-end;   /* Cola na direita */
+  /*flex-direction: column;  / Botões um embaixo do outro */
+  /*align-items: flex-end;   / Cola na direita */
   gap: 10px;               /* Espaço vertical */
 }
 
@@ -251,14 +251,14 @@ input.alerta {
    ============================ */
 
 .icon-btn {
-  display: inline-flex;
+  /*display: inline-flex;*/
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   background: #444;
   border: none;
-  border-radius: 50%;
+  border-radius: 8px;
   cursor: pointer;
   transition: background 0.2s;
   margin-right: 5px;
