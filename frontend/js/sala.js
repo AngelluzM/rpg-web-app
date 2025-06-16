@@ -25,7 +25,7 @@ export function iniciarSala() {
 	console.log('✅ Sidebar (sala) VISÍVEL!');
 
     salaCodigoSpan.textContent = roomCode;
-    salaNickSpan.textContent = playerName;
+    //salaNickSpan.textContent = playerName;
     salaRoleSpan.textContent = role.toUpperCase();
 
     showStatus(statusDiv, "Conectado à sala!", 'success');
