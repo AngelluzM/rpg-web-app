@@ -181,28 +181,6 @@ input.alerta {
 }
 
 /* ============================
-   📤📁 BOTÕES ICÔNEOS
-   ============================ */
-
-.icon-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  background: #444;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background 0.2s;
-  margin-right: 5px;
-}
-
-.icon-btn:hover {
-  background: #666;
-}
-
-/* ============================
    🗂️ MODAIS
    ============================ */
 
@@ -244,17 +222,48 @@ input.alerta {
    📌 INFO E ACTIONS
    ============================ */
 
-.sala-info {
-  margin-bottom: 10px;
+/* Container de título + actions alinhados */
+.sala-header {
+  position: relative;
+  display: flex;
+  align-items: center;     /* Alinha tudo na mesma linha */
+  justify-content: space-between;  /* Espaço entre título e coluna de actions */
+  margin-bottom: 15px;
+}
+
+.sala-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px; /* Espaço entre RoomCode e Copiar */
 }
 
 .sala-actions {
   display: flex;
-  justify-content: flex-end;
-  gap: 15px;
+  flex-direction: column;  /* Botões um embaixo do outro */
+  align-items: flex-end;   /* Cola na direita */
+  gap: 10px;               /* Espaço vertical */
 }
 
-#btnCopyCodigo {
-  margin-left: 6px;
-  vertical-align: middle;
+/* Botões icônicos padronizados */
+
+/* ============================
+   📤📁 BOTÕES ICÔNEOS
+   ============================ */
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: #444;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-right: 5px;
+}
+
+.icon-btn:hover {
+  background: #666;
 }
