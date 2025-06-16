@@ -48,19 +48,20 @@
     <!-- 🔹 SIDEBAR FIXA -->
     <div id="sidebar" class="sidebar hidden">
       <!-- Info da Sala -->
-      <div class="sala-info">
-        <p font-size="200px"><strong><span id="salaRole">HOST</span>:</strong> <strong id="salaNick">AngelluzM</strong></p>
-        <h3>SALA: <span id="salaCodigo">74ryd32u</span></h3>
-        <!-- Ações rápidas -->
-      <div class="sala-actions">
-    <button id="btnCopyCodigo" class="icon-btn" title="Copiar código da sala">📋</button>
-        <button id="btnExportar" class="icon-btn" title="Exportar Sala">📤</button>
-        <label id="labelImportar" class="icon-btn" title="Importar Sala">📁
-          <input type="file" id="inputImportar" accept=".json" hidden="">
-        </label>
-      </div>
-        
-      </div>
+		<!-- Bloco de título + Copiar -->
+		<div class="sala-header">
+		  <div class="sala-title">
+			Sala: <span id="salaCodigo"></span>
+			<button id="btnCopyCodigo" class="icon-btn" title="Copiar Código">📋</button>
+		  </div>
+
+		  <!-- Bloco de ações: Exportar & Importar em coluna -->
+		  <div class="sala-actions">
+			<button id="btnExportar" class="icon-btn hidden" title="Exportar Sala">📤</button>
+			<button id="btnImportar" class="icon-btn hidden" title="Importar Sala">📁</button>
+			<input type="file" id="inputImportar" accept=".json" hidden>
+		  </div>
+		</div>
 
       <!-- Botões de Abas -->
       <div class="tab-buttons">
