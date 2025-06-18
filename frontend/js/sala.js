@@ -15,7 +15,14 @@ export function iniciarSala() {
   const inputImportar = document.getElementById('inputImportar');
   const btnCopyCodigo = document.getElementById('btnCopyCodigo');
   const statusDiv = document.getElementById('status');
-  const sidebar = document.getElementById('sidebar')
+  const sidebar = document.getElementById('sidebar');
+  const btnAddPdf = document.getElementById('btnAddPdf');
+  const modalAddPdf = document.getElementById('modalAddPdf');
+  const pdfTitulo = document.getElementById('pdfTitulo');
+  const pdfUrl = document.getElementById('pdfUrl');
+  const btnEnviarPdf = document.getElementById('btnEnviarPdf');
+  const btnCancelarPdf = document.getElementById('btnCancelarPdf');
+  const listaCompendium = document.getElementById('listaCompendium');
 
   // Quando entra na sala
   socket.on('joinedRoom', ({ roomCode, playerName, role }) => {
@@ -106,6 +113,49 @@ export function iniciarSala() {
     link.click();
     link.remove();
   });
+
+// Abre modal
+btnAddPdf.addEventListener('click', () => {
+  modalAddPdf.classList.remove('hidden');
+});
+
+// Fecha modal
+btnCancelarPdf.addEventListener('click', () => {
+  modalAddPdf.classList.add('hidden');
+  pdfTitulo.value = '';
+  pdfUrl.value = '';
+});
+
+// Salva link na lista
+btnEnviarPdf.addEventListener('click', () => {
+  const titulo = pdfTitulo.value.trim();
+  const url = pdfUrl.value.trim();
+
+  if (!titulo || !url) {
+    alert('Preencha título e URL!');
+    return;
+  }
+
+  // Só aceitar Google Drive ou OneDrive
+  if (!url.includes('drive.google.com') && !url.includes('onedrive.live.com')) {
+    alert('Somente Google Drive ou OneDrive são aceitos!');
+    return;
+  }
+
+  // Cria item na lista
+  const li = document.createElement('li');
+  const a = document.createElement('a');
+  a.href = url;
+  a.textContent = titulo;
+  a.target = '_blank';
+  li.appendChild(a);
+  listaCompendium.appendChild(li);
+
+  // Limpa e fecha modal
+  pdfTitulo.value = '';
+  pdfUrl.value = '';
+  modalAddPdf.classList.add('hidden');
+});
 
 // 1️⃣ O botão dispara o input:
 btnImportar.addEventListener('click', () => {
