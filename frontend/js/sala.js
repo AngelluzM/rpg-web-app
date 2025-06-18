@@ -15,7 +15,7 @@ export function iniciarSala() {
   const inputImportar = document.getElementById('inputImportar');
   const btnCopyCodigo = document.getElementById('btnCopyCodigo');
   const statusDiv = document.getElementById('status');
-  const sidebar = document.getElementById('sidebar');
+  const sidebar = document.getElementById('sidebar'); //SIDEBAR
   const btnAddPdf = document.getElementById('btnAddPdf');
   const modalAddPdf = document.getElementById('modalAddPdf');
   const pdfTitulo = document.getElementById('pdfTitulo');
@@ -23,6 +23,9 @@ export function iniciarSala() {
   const btnEnviarPdf = document.getElementById('btnEnviarPdf');
   const btnCancelarPdf = document.getElementById('btnCancelarPdf');
   const listaCompendium = document.getElementById('listaCompendium');
+  // Seleciona todos os botões de aba e as seções de conteúdo das abas
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  const tabContents = document.querySelectorAll('.tab-content');
 
   // Quando entra na sala
   socket.on('joinedRoom', ({ roomCode, playerName, role }) => {
@@ -85,6 +88,20 @@ export function iniciarSala() {
     limparDadosJogador();
 	sidebar.classList.add('hidden');
     window.location.reload();
+  });
+  
+  // Adiciona evento de clique em cada botão de aba para alternar a exibição
+  tabButtons.forEach(button => {
+	    button.addEventListener('click', () => {
+      // Identifica a aba de destino a partir do atributo data-tab do botão clicado
+      const abaDestino = button.dataset.tab;
+      // Remove a classe 'active' de todos os botões e de todas as seções de conteúdo
+      tabButtons.forEach(btn => btn.classList.remove('active'));
+      tabContents.forEach(section => section.classList.remove('active'));
+      // Adiciona 'active' ao botão clicado e à seção de conteúdo correspondente
+      button.classList.add('active');
+      document.getElementById(abaDestino).classList.add('active');
+    });
   });
 
   // Exportar sala JSON (exemplo mock)
