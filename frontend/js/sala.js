@@ -32,6 +32,7 @@ export function iniciarSala() {
     lobbyDiv.classList.add('hidden');
     salaDiv.classList.remove('hidden');
 	sidebar.classList.remove('hidden');
+
 	
 	console.log('✅ Sidebar (sala) VISÍVEL!');
 
@@ -44,9 +45,11 @@ export function iniciarSala() {
     if (role === 'host') {
       btnExportar.classList.remove('hidden');
       btnImportar.classList.remove('hidden');
+	  btnAddPdf.classList.remove('hidden');
     } else {
       btnExportar.classList.add('hidden');
       btnImportar.classList.add('hidden');
+	  btnAddPdf.classList.add('hidden');
     }
   });
 
@@ -154,10 +157,16 @@ btnEnviarPdf.addEventListener('click', () => {
   }
 
   // Só aceitar Google Drive ou OneDrive
-  if (!url.includes('drive.google.com') && !url.includes('onedrive.live.com')) {
-    alert('Somente Google Drive ou OneDrive são aceitos!');
-    return;
-  }
+  if (
+  !(
+    url.includes('drive.google.com') ||
+    url.includes('docs.google.com') ||
+    url.includes('onedrive.live.com')
+  )
+) {
+  alert('Somente Google Drive, Google Docs ou OneDrive são aceitos!');
+  return;
+}
 
   // Cria item na lista
   const li = document.createElement('li');
