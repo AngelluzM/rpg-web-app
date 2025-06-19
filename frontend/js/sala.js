@@ -73,6 +73,21 @@ export function iniciarSala() {
     });
   });
 
+	// Listener para atualização do Compendium
+	socket.on('updateCompendium', ({ listaPdf }) => {
+	  const listaCompendium = document.getElementById('listaCompendium');
+	  listaCompendium.innerHTML = '';
+	  listaPdf.forEach(({ titulo, url }) => {
+		const li = document.createElement('li');
+		const a = document.createElement('a');
+		a.href = url;
+		a.textContent = titulo;
+		a.target = '_blank';
+		li.appendChild(a);
+		listaCompendium.appendChild(li);
+	  });
+	});
+
   // Evento de copiar código da sala
   btnCopyCodigo.addEventListener('click', () => {
     const codigo = salaCodigoSpan.textContent.trim();
@@ -181,6 +196,12 @@ btnEnviarPdf.addEventListener('click', () => {
   pdfTitulo.value = '';
   pdfUrl.value = '';
   modalAddPdf.classList.add('hidden');
+});
+
+socket.emit('addCompendium', {
+  sala: localStorage.getItem('sala'),
+  titulo,
+  url
 });
 
 // 1️⃣ O botão dispara o input:
