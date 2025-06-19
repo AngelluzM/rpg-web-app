@@ -99,16 +99,34 @@ io.on('connection', (socket) => {
       }
     }
   });
+
+	socket.on('addCompendium', ({ sala, titulo, url }) => {
+		if (!salas[sala]) return;
+		if (socket.id !== salas[sala].host) return;
+		salas[sala].compendium.push({ titulo, url });
+		io.to(sala).emit('updateCompendium', { listaPdf: salas[sala].compendium });
+	  });
+
+	  socket.on('editCompendium', ({ sala, index, titulo, url }) => {
+		if (!salas[sala]) return;
+		if (socket.id !== salas[sala].host) return;
+		salas[sala].compendium[index] = { titulo, url };
+		io.to(sala).emit('updateCompendium', { listaPdf: salas[sala].compendium });
+	  });
+
+	  socket.on('deleteCompendium', ({ sala, index }) => {
+		if (!salas[sala]) return;
+		if (socket.id !== salas[sala].host) return;
+		salas[sala].compendium.splice(index, 1);
+		io.to(sala).emit('updateCompendium', { listaPdf: salas[sala].compendium });
+	  });
+
 });
 
-socket.on('addCompendium', ({ sala, titulo, url }) => {
-  // Supondo que salas[sala].compendium seja um array
-  salas[sala].compendium.push({ titulo, url });
-  io.to(sala).emit('updateCompendium', { listaPdf: salas[sala].compendium });
-});
+
 
 // Exemplo: Quando o host adicionar um PDF ao compendium
-io.to(roomCode).emit('updateCompendium', { listaPdf });
+io.to(sala).emit('updateCompendium', { listaPdf });
 
 const PORT = process.env.PORT || 8080;
 server.listen(PORT, () => {
