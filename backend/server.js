@@ -46,7 +46,8 @@ io.on('connection', (socket) => {
           userId,
           nome: playerName,
           papel: role
-        }]
+        }],
+		compendium: []
       };
     } else {
       const sala = salas[roomCode];
@@ -75,6 +76,7 @@ io.on('connection', (socket) => {
           nome: playerName,
           papel: role
         });
+		
       }
     }
 
