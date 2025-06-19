@@ -101,6 +101,12 @@ io.on('connection', (socket) => {
   });
 });
 
+socket.on('addCompendium', ({ sala, titulo, url }) => {
+  // Supondo que salas[sala].compendium seja um array
+  salas[sala].compendium.push({ titulo, url });
+  io.to(sala).emit('updateCompendium', { listaPdf: salas[sala].compendium });
+});
+
 // Exemplo: Quando o host adicionar um PDF ao compendium
 io.to(roomCode).emit('updateCompendium', { listaPdf });
 
