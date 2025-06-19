@@ -101,6 +101,8 @@ io.on('connection', (socket) => {
   });
 });
 
+// Exemplo: Quando o host adicionar um PDF ao compendium
+io.to(roomCode).emit('updateCompendium', { listaPdf });
 
 const PORT = process.env.PORT || 8080;
 server.listen(PORT, () => {
