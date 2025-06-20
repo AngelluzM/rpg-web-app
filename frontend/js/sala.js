@@ -146,7 +146,7 @@ export function iniciarSala() {
 	  const blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' });
 	  const link = document.createElement('a');
 	  link.href = URL.createObjectURL(blob);
-	  link.download = `save-rpgwebapp.json`;
+	  link.download = `sala-${dados.host.nome}.json`;
 	  document.body.appendChild(link);
 	  link.click();
 	  link.remove();
