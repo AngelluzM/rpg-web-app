@@ -123,63 +123,67 @@ export function iniciarSala() {
   });
 
   // Exportar sala JSON (exemplo mock)
-  btnExportar.addEventListener('click', () => {
-    const papel = localStorage.getItem('papel');
-    if (papel !== 'host') {
-      showStatus(statusDiv, "Apenas o Mestre pode exportar a sala!", 'danger');
-      return;
-    }
 
-    const dados = {
-      sala: localStorage.getItem('sala'),
-      host: {
-        userId: localStorage.getItem('userId'),
-        nome: localStorage.getItem('nick')
-      },
-      jogadores: [], // Popular futuramente
-      mapa: {}, // Popular futuramente
-    };
+	btnExportar.addEventListener('click', () => {
+	  const papel = localStorage.getItem('papel');
+	  if (papel !== 'host') {
+		showStatus(statusDiv, "Apenas o Mestre pode exportar a sala!", 'danger');
+		return;
+	  }
 
-    const blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `sala-${dados.sala}-${dados.host.name}.json`;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-  });
+	  // Pega dados persistentes — ajuste os nomes se necessário
+	  const compendium = window.compendium || [];
+	  const mapa = window.mapa || {};
+	  const config = window.config || {}; // Configurações adicionais, se tiver
 
-// Abre modal
-btnAddPdf.addEventListener('click', () => {
-  modalAddPdf.classList.remove('hidden');
-});
+	  const dados = {
+		compendium: compendium,
+		mapa: mapa,
+		config: config,
+		// Adicione mais campos persistentes aqui se quiser
+	  };
 
-// Fecha modal
-btnCancelarPdf.addEventListener('click', () => {
-  modalAddPdf.classList.add('hidden');
-  pdfTitulo.value = '';
-  pdfUrl.value = '';
-});
+	  const blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' });
+	  const link = document.createElement('a');
+	  link.href = URL.createObjectURL(blob);
+	  link.download = `save-rpgwebapp.json`;
+	  document.body.appendChild(link);
+	  link.click();
+	  link.remove();
+	});
 
-// Salva link na lista Compendium
-btnEnviarPdf.addEventListener('click', () => {
-  const titulo = pdfTitulo.value.trim();
-  const url = pdfUrl.value.trim();
 
-  if (!titulo || !url) {
-    alert('Preencha título e URL!');
-    return;
-  }
-  if (
-    !(
-      url.includes('drive.google.com') ||
-      url.includes('docs.google.com') ||
-      url.includes('onedrive.live.com')
-    )
-  ) {
-    alert('Somente Google Drive, Google Docs ou OneDrive são aceitos!');
-    return;
-  }
+	// Abre modal
+	btnAddPdf.addEventListener('click', () => {
+	  modalAddPdf.classList.remove('hidden');
+	});
+
+	// Fecha modal
+	btnCancelarPdf.addEventListener('click', () => {
+	  modalAddPdf.classList.add('hidden');
+	  pdfTitulo.value = '';
+	  pdfUrl.value = '';
+	});
+
+	// Salva link na lista Compendium
+	btnEnviarPdf.addEventListener('click', () => {
+	  const titulo = pdfTitulo.value.trim();
+	  const url = pdfUrl.value.trim();
+
+	  if (!titulo || !url) {
+		alert('Preencha título e URL!');
+		return;
+	  }
+	  if (
+		!(
+		  url.includes('drive.google.com') ||
+		  url.includes('docs.google.com') ||
+		  url.includes('onedrive.live.com')
+		)
+	  ) {
+		alert('Somente Google Drive, Google Docs ou OneDrive são aceitos!');
+		return;
+	  }
 
   // (Você pode remover o código que já adiciona o <li> localmente — quem cuida disso agora é o updateCompendium)
 
@@ -199,25 +203,36 @@ btnEnviarPdf.addEventListener('click', () => {
 
 
 // 1️⃣ O botão dispara o input:
-btnImportar.addEventListener('click', () => {
-  inputImportar.click();
-});
+	btnImportar.addEventListener('click', () => {
+	  inputImportar.value = ''; // Limpa seleção anterior
+	  inputImportar.click();
+	});
 
-// 2️⃣ O input faz a mágica quando o arquivo for escolhido:
-  inputImportar.addEventListener('change', (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
+	inputImportar.addEventListener('change', (event) => {
+	  const file = event.target.files[0];
+	  if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      try {
-        const dados = JSON.parse(e.target.result);
-        showStatus(statusDiv, "Sala importada com sucesso!", 'success');
-        console.log("Dados importados:", dados);
-      } catch {
-        showStatus(statusDiv, "Erro ao importar sala.", 'danger');
-      }
-    };
-    reader.readAsText(file);
-  });
+	  const reader = new FileReader();
+	  reader.onload = (e) => {
+		try {
+		  const dados = JSON.parse(e.target.result);
+
+		  // Restaura os dados no app
+		  window.compendium = dados.compendium || [];
+		  window.mapa = dados.mapa || {};
+		  window.config = dados.config || {};
+
+		  // Faça update visual/emit para servidor se precisar:
+		  // Exemplo: atualizar UI do compendium, recarregar mapa, etc
+		  // updateCompendiumUI(window.compendium);
+		  // updateMapaUI(window.mapa);
+
+		  showStatus(statusDiv, "Dados importados com sucesso!", 'success');
+		} catch (err) {
+		  showStatus(statusDiv, "Erro ao importar o arquivo!", 'danger');
+		}
+	  };
+	  reader.readAsText(file);
+	});
+
 }
