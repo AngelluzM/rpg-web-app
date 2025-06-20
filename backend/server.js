@@ -83,6 +83,10 @@ io.on('connection', (socket) => {
     socket.join(roomCode);
     socket.emit('joinedRoom', { roomCode, playerName, role });
 
+	if (salas[roomCode] && salas[roomCode].compendium) {
+	  socket.emit('updateCompendium', { listaPdf: salas[roomCode].compendium });
+	}
+
     io.to(roomCode).emit('updatePlayerList', {
       jogadores: salas[roomCode].jogadores
     });
