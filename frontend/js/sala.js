@@ -161,7 +161,7 @@ btnCancelarPdf.addEventListener('click', () => {
   pdfUrl.value = '';
 });
 
-// Salva link na lista
+// Salva link na lista Compendium
 btnEnviarPdf.addEventListener('click', () => {
   const titulo = pdfTitulo.value.trim();
   const url = pdfUrl.value.trim();
@@ -170,38 +170,30 @@ btnEnviarPdf.addEventListener('click', () => {
     alert('Preencha título e URL!');
     return;
   }
-
-  // Só aceitar Google Drive ou OneDrive
   if (
-  !(
-    url.includes('drive.google.com') ||
-    url.includes('docs.google.com') ||
-    url.includes('onedrive.live.com')
-  )
-) {
-  alert('Somente Google Drive, Google Docs ou OneDrive são aceitos!');
-  return;
-}
+    !(
+      url.includes('drive.google.com') ||
+      url.includes('docs.google.com') ||
+      url.includes('onedrive.live.com')
+    )
+  ) {
+    alert('Somente Google Drive, Google Docs ou OneDrive são aceitos!');
+    return;
+  }
 
-  // Cria item na lista
-  const li = document.createElement('li');
-  const a = document.createElement('a');
-  a.href = url;
-  a.textContent = titulo;
-  a.target = '_blank';
-  li.appendChild(a);
-  listaCompendium.appendChild(li);
+  // (Você pode remover o código que já adiciona o <li> localmente — quem cuida disso agora é o updateCompendium)
+
+  // Envia para o servidor
+  socket.emit('addCompendium', {
+    sala: localStorage.getItem('sala'),
+    titulo,
+    url
+  });
 
   // Limpa e fecha modal
   pdfTitulo.value = '';
   pdfUrl.value = '';
   modalAddPdf.classList.add('hidden');
-  
-	  socket.emit('addCompendium', {
-	  sala: localStorage.getItem('sala'),
-	  titulo,
-	  url
-	});
 });
 
 
