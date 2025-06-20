@@ -9,7 +9,7 @@ export function iniciarSala() {
   const salaNickSpan = document.getElementById('salaNick');
   const salaRoleSpan = document.getElementById('salaRole');
   const listaJogadores = document.getElementById('listaJogadores');
-  const btnSair = document.getElementById('btnSair');
+  // const btnSair = document.getElementById('btnSair');
   const btnExportar = document.getElementById('btnExportar');
   const btnImportar = document.getElementById('btnImportar');
   const inputImportar = document.getElementById('inputImportar');
@@ -26,14 +26,28 @@ export function iniciarSala() {
   // Seleciona todos os botões de aba e as seções de conteúdo das abas
   const tabButtons = document.querySelectorAll('.tab-btn');
   const tabContents = document.querySelectorAll('.tab-content');
+  // variavel menu superior
+  const relogioSala = document.getElementById('relogioSala');
 
   // Quando entra na sala
   socket.on('joinedRoom', ({ roomCode, playerName, role }) => {
     lobbyDiv.classList.add('hidden');
     salaDiv.classList.remove('hidden');
 	sidebar.classList.remove('hidden');
+	document.getElementById('menuBarraSala').classList.remove('hidden');
 
-	
+	// INICIA O RELÓGIO AO ENTRAR NA SALA
+    function atualizarRelogio() {
+      const agora = new Date();
+      const h = agora.getHours().toString().padStart(2, '0');
+      const m = agora.getMinutes().toString().padStart(2, '0');
+      const s = agora.getSeconds().toString().padStart(2, '0');
+      relogioSala.textContent = `${h}:${m}:${s}`;
+    }
+    setInterval(atualizarRelogio, 1000);
+    atualizarRelogio();
+  });
+  
 	console.log('✅ Sidebar (sala) VISÍVEL!');
 
     salaCodigoSpan.textContent = roomCode;
@@ -102,11 +116,12 @@ export function iniciarSala() {
   });
 
   // Botão para desconectar
-  btnSair.addEventListener('click', () => {
-    limparDadosJogador();
-	sidebar.classList.add('hidden');
-    window.location.reload();
-  });
+document.getElementById('btnSairSala').addEventListener('click', () => {
+  limparDadosJogador();
+  document.getElementById('sidebar').classList.add('hidden');
+  window.location.reload();
+});
+
   
   // Adiciona evento de clique em cada botão de aba para alternar a exibição
   tabButtons.forEach(button => {
@@ -244,5 +259,5 @@ export function iniciarSala() {
 	  };
 	  reader.readAsText(file);
 	});
-
+	
 }
