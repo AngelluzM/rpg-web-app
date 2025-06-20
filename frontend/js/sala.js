@@ -46,7 +46,7 @@ export function iniciarSala() {
     }
     setInterval(atualizarRelogio, 1000);
     atualizarRelogio();
-  });
+  
   
 	console.log('✅ Sidebar (sala) VISÍVEL!');
 
@@ -65,7 +65,7 @@ export function iniciarSala() {
       btnImportar.classList.add('hidden');
 	  btnAddPdf.classList.add('hidden');
     }
-  
+  });
 
   // Atualiza a lista de jogadores sempre com o HOST no topo
   socket.on('updatePlayerList', ({ jogadores }) => {
