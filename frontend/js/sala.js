@@ -196,13 +196,15 @@ btnEnviarPdf.addEventListener('click', () => {
   pdfTitulo.value = '';
   pdfUrl.value = '';
   modalAddPdf.classList.add('hidden');
+  
+	  socket.emit('addCompendium', {
+	  sala: localStorage.getItem('sala'),
+	  titulo,
+	  url
+	});
 });
 
-socket.emit('addCompendium', {
-  sala: localStorage.getItem('sala'),
-  titulo,
-  url
-});
+
 
 // 1️⃣ O botão dispara o input:
 btnImportar.addEventListener('click', () => {
