@@ -131,26 +131,36 @@ export function iniciarSala() {
 		return;
 	  }
 
-	  // Pega dados persistentes — ajuste os nomes se necessário
+	  // Dados persistentes do jogo
 	  const compendium = window.compendium || [];
 	  const mapa = window.mapa || {};
-	  const config = window.config || {}; // Configurações adicionais, se tiver
+	  const config = window.config || {};
+
+	  // Dados do host APENAS para referência e nome do arquivo
+	  const hostInfo = {
+		userId: localStorage.getItem('userId'),
+		nome: localStorage.getItem('nick')
+	  };
 
 	  const dados = {
+		host: hostInfo,          // Inclui host só para referência!
 		compendium: compendium,
 		mapa: mapa,
-		config: config,
-		// Adicione mais campos persistentes aqui se quiser
+		config: config
 	  };
+
+	  // Usa nome do host no arquivo exportado
+	  const nomeArquivo = `sala-${hostInfo.nome || 'mestre'}.json`;
 
 	  const blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' });
 	  const link = document.createElement('a');
 	  link.href = URL.createObjectURL(blob);
-	  link.download = `sala-${dados.host.nome}.json`;
+	  link.download = nomeArquivo;
 	  document.body.appendChild(link);
 	  link.click();
 	  link.remove();
 	});
+
 
 
 	// Abre modal
