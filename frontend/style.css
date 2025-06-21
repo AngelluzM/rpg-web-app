@@ -241,6 +241,7 @@ input.alerta {
   align-items: center;     /* Alinha tudo na mesma linha */
   justify-content: space-between;  /* Espaço entre título e coluna de actions */
   margin-bottom: 15px;
+  margin-top: 10px;
 }
 
 .sala-title {
@@ -313,9 +314,9 @@ input.alerta {
   background: none;
   border: none;
   padding: 0;
-  margin: 2px 0; /* margem superior e inferior de 2px para dar respiro */
-  height: 26px;   /* altura do botão */
-  width: 55px;    /* largura igual ao SVG */
+  margin: 2px 0;
+  height: 26px;
+  width: 92px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -323,18 +324,17 @@ input.alerta {
   cursor: pointer;
   transition: box-shadow 0.15s, filter 0.15s;
 }
-
 .btn-sair-sala svg {
   height: 26px;
-  width: 55px;
+  width: 92px;
   display: block;
 }
-
 .btn-sair-sala:hover,
 .btn-sair-sala:focus {
   box-shadow: 0 0 0 2px #15803d99;
   filter: brightness(1.08);
 }
+
 
 .icon-exit svg {
   display: block;
