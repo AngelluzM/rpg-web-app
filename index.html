@@ -45,17 +45,28 @@
 	  <div class="menu-direita">
 	  <!-- Botão fixo de DESCONECTAR	  -->
 		<button id="btnSairSala" class="btn-sair-sala" title="Sair da sala">
-		  <svg width="55" height="26" viewBox="0 0 84 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-			<rect width="84" height="40" rx="4" fill="#16a34a"/>
-			<text x="3" y="29" font-size="22" font-family="Arial, Helvetica, sans-serif" font-weight="bold" fill="#fff">SAÍDA</text>
-			<rect x="52" y="10" width="17" height="20" fill="#fff"/>
-			<circle cx="61" cy="18" r="3" fill="#16a34a"/>
-			<rect x="60.5" y="21" width="1.7" height="6" rx="0.8" fill="#16a34a"/>
-			<rect x="63.5" y="22.3" width="6" height="1.7" rx="0.8" transform="rotate(15 63.5 22.3)" fill="#16a34a"/>
-			<rect x="55" y="24" width="6" height="1.7" rx="0.8" transform="rotate(-30 55 24)" fill="#16a34a"/>
-			<rect x="61.1" y="28" width="7" height="1.7" rx="0.8" transform="rotate(25 61.1 28)" fill="#16a34a"/>
-			<rect x="60.5" y="28" width="1.7" height="7" rx="0.8" transform="rotate(-10 60.5 28)" fill="#16a34a"/>
-			<polygon points="69,30 52,30 58,36 75,36" fill="#fff" opacity="0.6"/>
+		  <svg width="68" height="26" viewBox="0 0 136 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<!-- Fundo placa -->
+			<rect x="0" y="0" width="136" height="52" rx="8" fill="#16a34a"/>
+			<!-- Texto SAÍDA, mais espaçado -->
+			<text x="8" y="38" font-size="30" font-family="Arial, Helvetica, sans-serif" font-weight="bold" fill="#fff" letter-spacing="2">SAÍ</text>
+			<text x="56" y="38" font-size="30" font-family="Arial, Helvetica, sans-serif" font-weight="bold" fill="#fff" letter-spacing="1">DA</text>
+			<!-- Porta -->
+			<rect x="94" y="13" width="25" height="26" fill="#fff"/>
+			<!-- Boneco (cabeça) -->
+			<circle cx="107" cy="24" r="4" fill="#16a34a"/>
+			<!-- Corpo -->
+			<rect x="105.7" y="28" width="2.5" height="10" rx="1.2" fill="#16a34a"/>
+			<!-- Braço direito -->
+			<rect x="111" y="31" width="7" height="2.5" rx="1.2" transform="rotate(18 111 31)" fill="#16a34a"/>
+			<!-- Braço esquerdo -->
+			<rect x="99" y="33" width="8" height="2.5" rx="1.2" transform="rotate(-32 99 33)" fill="#16a34a"/>
+			<!-- Perna direita -->
+			<rect x="107.5" y="39" width="9" height="2.5" rx="1.2" transform="rotate(22 107.5 39)" fill="#16a34a"/>
+			<!-- Perna esquerda -->
+			<rect x="105.7" y="39" width="2.5" height="10" rx="1.2" transform="rotate(-13 105.7 39)" fill="#16a34a"/>
+			<!-- Sombra saída -->
+			<polygon points="119,39 94,39 104,50 129,50" fill="#d1fae5" opacity="0.85"/>
 		  </svg>
 		</button>
 
@@ -78,11 +89,11 @@
 		<div class="sala-header">
 		  <div class="sala-title">
 			Sala: <span id="salaCodigo"></span>
-			<button id="btnCopyCodigo" class="icon-btn" title="Copiar Código">📋</button>
 		  </div>
 
 		  <!-- Bloco de ações: Exportar & Importar em coluna -->
 		  <div class="sala-actions">
+			<button id="btnCopyCodigo" class="icon-btn" title="Copiar Código">📋</button>
 			<button id="btnExportar" class="icon-btn hidden" title="Exportar Sala">📤</button>
 			<button id="btnImportar" class="icon-btn hidden" title="Importar Sala">📁</button>
 			<input type="file" id="inputImportar" accept=".json" hidden>
