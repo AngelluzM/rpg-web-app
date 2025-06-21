@@ -305,24 +305,24 @@ input.alerta {
 .btn-sair-sala {
   background: #fff;
   color: #c0392b;
-  border: none;
+  border: 2px solid #c0392b;
   font-size: 1.1em;
   font-weight: bold;
-  padding: 8px 18px 8px 10px;
+  padding: 7px 18px 7px 14px;
   border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.12);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   cursor: pointer;
-  transition: background 0.15s, color 0.15s;
-  border: 2px solid #c0392b;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+  transition: background 0.15s, color 0.15s, border 0.15s;
 }
+
 .btn-sair-sala:hover {
   background: #c0392b;
   color: #fff;
+  border-color: #a93226;
 }
-.placa-saida {
-  font-size: 1.4em;
-  filter: drop-shadow(0 0 2px #c0392b);
+.icon-exit svg {
+  display: block;
 }
