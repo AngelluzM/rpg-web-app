@@ -40,6 +40,12 @@ body.dark-mode {
   display: none !important;
 }
 
+#sala {
+  padding-top: 48px; /* igual à altura da barra do menu */
+}
+
+
+
 /* ============================
    📑 SIDEBAR FIXA
    ============================ */
@@ -51,6 +57,10 @@ body.dark-mode {
   padding: 15px;
   display: flex;
   flex-direction: column;
+}
+
+#sidebar {
+  padding-top: 48px;
 }
 
 .sidebar h3,
