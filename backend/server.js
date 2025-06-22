@@ -21,7 +21,7 @@ const io = socketIo(server, {
 const salas = {};
 
 // Aqui, já passa io e salas pro seu módulo de mapa:
-require('./backend/mapaSharing.js')(io, salas);
+require('./mapaSharing.js')(io, salas);
 
 io.on('connection', (socket) => {
   console.log('Novo cliente conectado:', socket.id);
