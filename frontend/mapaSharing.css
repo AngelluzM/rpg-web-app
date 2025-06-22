@@ -1,0 +1,4 @@
+.mapa-container { /* veja exemplo anterior */ }
+.menu-zoom { /* veja exemplo anterior */ }
+.menu-zoom button { /* veja exemplo anterior */ }
+#mapaCanvas { background: #1a1a1a; border-radius: 8px; box-shadow: 0 2px 8px #0004; }
