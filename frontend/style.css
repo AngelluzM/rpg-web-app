@@ -367,7 +367,9 @@ input.alerta {
 .chat-input-area {
   display: flex;
   border-top: 1px solid #222;
-  background: #212121;
+  background: #23292e;
+  align-items: center;
+  padding: 0;
 }
 
 .chat-input {
@@ -375,22 +377,36 @@ input.alerta {
   border: none;
   padding: 6px 10px;
   font-size: 1em;
-  background: #232a2f;
+  background: #1a1d22;
   color: #fff;
   outline: none;
+  border-radius: 0 0 0 8px;
 }
 
 .chat-send-btn {
   border: none;
-  background: #2ecc40;
-  color: #fff;
-  font-weight: bold;
-  padding: 0 18px;
-  font-size: 1em;
-  border-radius: 0 0 8px 0;
+  background: transparent;
+  padding: 0 12px 0 8px;
   cursor: pointer;
-  transition: background 0.13s;
+  display: flex;
+  align-items: center;
+  height: 38px;
+  transition: background 0.12s;
+  border-radius: 0 0 8px 0;
 }
-.chat-send-btn:hover {
-  background: #16a34a;
+.chat-send-btn svg {
+  display: block;
+  width: 22px;
+  height: 22px;
+  fill: #b8e4ff;
+  transition: fill 0.15s;
 }
+.chat-send-btn:hover,
+.chat-send-btn:focus {
+  background: #233;
+}
+.chat-send-btn:hover svg,
+.chat-send-btn:focus svg {
+  fill: #fff;
+}
+
