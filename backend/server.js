@@ -26,7 +26,7 @@ require('./mapaSharing.js')(io, salas);
 
 // Isso serve manifest.json na raiz do site!
 app.get('/manifest.json', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/manifest.json'));
+  res.sendFile(path.join(__dirname, '../manifest.json'));
 });
 
 io.on('connection', (socket) => {
