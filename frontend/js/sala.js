@@ -28,6 +28,10 @@ export function iniciarSala() {
   const tabContents = document.querySelectorAll('.tab-content');
   // variavel menu superior
   const relogioSala = document.getElementById('relogioSala');
+  // variavel para o CHAT
+  const chatInput = document.getElementById('chatInput');
+  const chatSend = document.getElementById('chatSend');
+  const chatMessages = document.getElementById('chatMessages');
 
   // Quando entra na sala
   socket.on('joinedRoom', ({ roomCode, playerName, role }) => {
@@ -116,11 +120,11 @@ export function iniciarSala() {
   });
 
   // Botão para desconectar
-document.getElementById('btnSairSala').addEventListener('click', () => {
-  limparDadosJogador();
-  document.getElementById('sidebar').classList.add('hidden');
-  window.location.reload();
-});
+	document.getElementById('btnSairSala').addEventListener('click', () => {
+	  limparDadosJogador();
+	  document.getElementById('sidebar').classList.add('hidden');
+	  window.location.reload();
+	});
 
   
   // Adiciona evento de clique em cada botão de aba para alternar a exibição
@@ -259,5 +263,26 @@ document.getElementById('btnSairSala').addEventListener('click', () => {
 	  };
 	  reader.readAsText(file);
 	});
+	
+		// Chat events
+	  chatSend.addEventListener('click', sendMessage);
+	  chatInput.addEventListener('keydown', e => {
+		if (e.key === 'Enter') sendMessage();
+	  });
+
+	  function sendMessage() {
+		const msg = chatInput.value.trim();
+		if (msg.length > 0) {
+		  socket.emit('chatMessage', { sala: localStorage.getItem('sala'), msg });
+		  chatInput.value = '';
+		}
+	  }
+
+	  socket.on('chatMessage', ({ user, msg }) => {
+		const div = document.createElement('div');
+		div.textContent = `${user}: ${msg}`;
+		chatMessages.appendChild(div);
+		chatMessages.scrollTop = chatMessages.scrollHeight;
+	  });// fim do chat events
 	
 }
