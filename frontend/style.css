@@ -349,7 +349,7 @@ input.alerta {
   display: flex;
   flex-direction: column;
   height: 270px;
-  border: 1.5px solid #2ecc40;
+  border: 1.5px solid #aaa;
   border-radius: 10px;
   background: #161b22;
   margin-top: 16px;
