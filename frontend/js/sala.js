@@ -264,25 +264,33 @@ export function iniciarSala() {
 	  reader.readAsText(file);
 	});
 	
-		// Chat events
-	  chatSend.addEventListener('click', sendMessage);
-	  chatInput.addEventListener('keydown', e => {
-		if (e.key === 'Enter') sendMessage();
-	  });
+					// Chat events
+			// Enviar
+			chatSend.addEventListener('click', sendMessage);
+			chatInput.addEventListener('keydown', e => {
+			  if (e.key === 'Enter') sendMessage();
+			});
 
-	  function sendMessage() {
-		const msg = chatInput.value.trim();
-		if (msg.length > 0) {
-		  socket.emit('chatMessage', { sala: localStorage.getItem('sala'), msg });
-		  chatInput.value = '';
-		}
-	  }
+			function sendMessage() {
+			  const msg = chatInput.value.trim();
+			  if (msg.length > 0) {
+				socket.emit('chatMessage', {
+				  sala: localStorage.getItem('sala'),
+				  user: localStorage.getItem('nick'),
+				  msg
+				});
+				chatInput.value = '';
+			  }
+			}
 
-	  socket.on('chatMessage', ({ user, msg }) => {
-		const div = document.createElement('div');
-		div.textContent = `${user}: ${msg}`;
-		chatMessages.appendChild(div);
-		chatMessages.scrollTop = chatMessages.scrollHeight;
-	  });// fim do chat events
+			// Receber
+			socket.on('chatMessage', ({ user, msg }) => {
+			  if (!msg) return;
+			  const div = document.createElement('div');
+			  div.innerHTML = `<strong style="color:#90e0ff">${user}</strong>: <span>${msg}</span>`;
+			  chatMessages.appendChild(div);
+			  chatMessages.scrollTop = chatMessages.scrollHeight;
+			});
+			// fim do chat events
 	
 }
