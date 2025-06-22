@@ -342,12 +342,14 @@ input.alerta {
   width: 48px;
 }
 
-/*
-  conteiner chat
-*/
+/* ==========================
+             CHAT
+   ========================== */
 .chat-container {
   display: flex;
   flex-direction: column;
+  position: fixed;
+  bottom: 10px;
   height: 270px;
   border: 1.5px solid #aaa;
   border-radius: 10px;
