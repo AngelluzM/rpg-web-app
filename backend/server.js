@@ -23,7 +23,6 @@ const salas = {};
 // Aqui, já passa io e salas pro seu módulo de mapa:
 require('./mapaSharing.js')(io, salas);
 
-const path = require('path');
 
 // Isso serve manifest.json na raiz do site!
 app.get('/manifest.json', (req, res) => {
