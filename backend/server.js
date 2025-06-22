@@ -131,6 +131,13 @@ io.on('connection', (socket) => {
 		io.to(sala).emit('updateCompendium', { listaPdf: salas[sala].compendium });
 	  });
 
+
+		socket.on('chatMessage', ({ sala, user, msg }) => {
+		  if (!salas[sala]) return;
+		  io.to(sala).emit('chatMessage', { user, msg });
+		});
+
+
 });
 
 
