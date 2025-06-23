@@ -37,6 +37,11 @@ app.get('/icon-512.png', (req, res) => {
   res.sendFile(path.join(__dirname, '../icon-512.png'));
 });
 
+// Serve index.html para qualquer rota que não seja arquivo estático ou API
+app.get('*', (req, res) => {
+  res.sendFile(path.join(process.cwd(), 'index.html'));
+});
+
 io.on('connection', (socket) => {
   console.log('Novo cliente conectado:', socket.id);
 
