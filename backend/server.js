@@ -21,7 +21,6 @@ require('./mapaSharing.js')(io, salas);
 
 // 1. Serve arquivos estáticos
 app.use('/frontend', express.static(path.join(__dirname, '../frontend')));
-app.use(express.static(path.join(__dirname, '../frontend'))); // Se seus arquivos estão lá
 
 // 2. Manifest, icons, sw
 app.get('/manifest.json', (req, res) => {
