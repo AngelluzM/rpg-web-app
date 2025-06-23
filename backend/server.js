@@ -29,6 +29,14 @@ app.get('/manifest.json', (req, res) => {
   res.sendFile(path.join(__dirname, '../manifest.json'));
 });
 
+app.get('/icon-192.png', (req, res) => {
+  res.sendFile(path.join(__dirname, '../icon-192.png'));
+});
+
+app.get('/icon-512.png', (req, res) => {
+  res.sendFile(path.join(__dirname, '../icon-512.png'));
+});
+
 io.on('connection', (socket) => {
   console.log('Novo cliente conectado:', socket.id);
 
