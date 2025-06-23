@@ -7,11 +7,6 @@ const path = require('path');
 const app = express();
 app.use(cors());
 
-app.use('/frontend', express.static(path.join(__dirname, '../frontend')));
-app.get('*', (req, res) => {
-  res.sendFile(path.join(process.cwd(), 'index.html'));
-});
-
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: { origin: '*' }
@@ -24,19 +19,28 @@ const salas = {};
 require('./mapaSharing.js')(io, salas);
 
 
-// Isso serve manifest.json na raiz do site!
+// 1. Serve arquivos estáticos
+app.use('/frontend', express.static(path.join(__dirname, '../frontend')));
+app.use(express.static(path.join(__dirname, '../frontend'))); // Se seus arquivos estão lá
+
+// 2. Manifest, icons, sw
 app.get('/manifest.json', (req, res) => {
   res.sendFile(path.join(__dirname, '../manifest.json'));
 });
-
 app.get('/icon-192.png', (req, res) => {
   res.sendFile(path.join(__dirname, '../icon-192.png'));
 });
-
 app.get('/icon-512.png', (req, res) => {
   res.sendFile(path.join(__dirname, '../icon-512.png'));
 });
+app.get('/sw.js', (req, res) => {
+  res.sendFile(path.join(__dirname, '../sw.js'));
+});
 
+// 3. Rota catch-all sempre POR ÚLTIMO!
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../index.html'));
+});
 
 io.on('connection', (socket) => {
   console.log('Novo cliente conectado:', socket.id);
