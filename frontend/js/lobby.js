@@ -110,7 +110,7 @@ joinBtn.addEventListener('click', () => {
     roomCode = gerarCodigoSala();
   }
 
-  if (role === 'cliente' && roomCode.length < 4) {
+  if (role === 'cliente' && roomCode.length < 6) {
     showStatus(statusDiv, "Código da sala inválido.", 'danger');
     return;
   }
