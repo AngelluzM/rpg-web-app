@@ -279,7 +279,7 @@ input.alerta { border: 2px solid #ff5555; }
     width: 100vw; min-width: 0; padding: 0;
   }
   .menu-barra-sala {
-    height: 32px; padding: 0 4px;
+    height: 40px; padding: 0 4px;
   }
   .btn-sair-sala, .btn-sair-sala svg {
     width: 62px; height: 19px;
