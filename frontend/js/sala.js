@@ -93,6 +93,9 @@ export function iniciarSala() {
 
 	// Listener para atualização do Compendium
 	socket.on('updateCompendium', ({ listaPdf }) => {
+		  // CORRIGE: salva também no window.compendium!
+		  window.compendium = listaPdf || [];
+
 	  const listaCompendium = document.getElementById('listaCompendium');
 	  listaCompendium.innerHTML = '';
 	  listaPdf.forEach(({ titulo, url }) => {
