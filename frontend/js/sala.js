@@ -251,13 +251,16 @@ export function iniciarSala() {
 
 		  // Restaura os dados no app
 		  window.compendium = dados.compendium || [];
+		  window.personagens = dados.personagens || [];
 		  window.mapa = dados.mapa || {};
 		  window.config = dados.config || {};
 
 		  // Faça update visual/emit para servidor se precisar:
 		  // Exemplo: atualizar UI do compendium, recarregar mapa, etc
-		  // updateCompendiumUI(window.compendium);
-		  // updateMapaUI(window.mapa);
+
+			atualizarCompendiumUI(window.compendium);     // Essa função é um exemplo, adapte para o seu caso!
+			atualizarPersonagensUI(window.personagens);   // Idem
+			atualizarMapaUI(window.mapa);                 // Idem
 
 		  showStatus(statusDiv, "Dados importados com sucesso!", 'success');
 		} catch (err) {
