@@ -288,7 +288,40 @@ export function iniciarSala() {
 				chatInput.value = '';
 			  }
 			}
-
+			// atualiza lista de Compendium
+			function atualizarCompendiumUI(lista) {
+			  const listaCompendium = document.getElementById('listaCompendium');
+			  if (!listaCompendium) return;
+			  listaCompendium.innerHTML = '';
+			  lista.forEach(({ titulo, url }) => {
+				const li = document.createElement('li');
+				const a = document.createElement('a');
+				a.href = url;
+				a.textContent = titulo;
+				a.target = '_blank';
+				li.appendChild(a);
+				listaCompendium.appendChild(li);
+			  });
+			}
+			// Atualiza Lista de Personagens
+			function atualizarPersonagensUI(lista) {
+			  // Exemplo: preencha como precisa para sua interface
+			  const listaPersonagens = document.getElementById('listaPersonagens');
+			  if (!listaPersonagens) return;
+			  listaPersonagens.innerHTML = '';
+			  lista.forEach((p) => {
+				const li = document.createElement('li');
+				li.textContent = p.nome; // ou como for sua estrutura
+				listaPersonagens.appendChild(li);
+			  });
+			}
+			
+			// Atualiza Canvas de Mapa
+			function atualizarMapaUI(mapa) {
+			  // Exemplo, adapte pra seu canvas/mapa
+			  // Pode ser só atualizar a imagem/base64 ou limpar camadas e redesenhar
+			  // document.getElementById('mapaCanvas').src = mapa.imgBase64; // se for imagem
+			}
 			// Receber
 			socket.on('chatMessage', ({ user, msg }) => {
 			  if (!msg) return;
