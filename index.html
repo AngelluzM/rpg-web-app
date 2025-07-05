@@ -17,68 +17,69 @@
   <div id="container-geral">
 
     <!-- 🔹 ÁREA PRINCIPAL (LOBBY ou MAPA) -Atualizada0- -->
-    <div class="main-content">
+	<div class="main-content">
 
-      <!-- 📌 Tela Lobby -->
-      <div id="lobby" class="screen">
-        <div class="form-container">
-          <h1>TABLE PLAY RPG ON-BOARD</h1>
+			  <!-- 📌 Tela Lobby -->
+			  <div id="lobby" class="screen">
+				<div class="form-container">
+				  <h1>TABLE PLAY RPG ON-BOARD</h1>
 
-          <input type="text" id="nickName" placeholder="Digite seu apelido" maxlength="15" />
-          <div id="nickAlerta" class="alert-msg hidden">* obrigatório definir um nick</div>
+				  <input type="text" id="nickName" placeholder="Digite seu apelido" maxlength="15" />
+				  <div id="nickAlerta" class="alert-msg hidden">* obrigatório definir um nick</div>
 
-          <button id="btnHost" class="btn">Criar Sala</button>
-          <button id="btnCliente" class="btn">Acessar Sala</button>
+				  <button id="btnHost" class="btn">Criar Sala</button>
+				  <button id="btnCliente" class="btn">Acessar Sala</button>
 
-          <input type="text" id="roomCode" class="hidden" placeholder="Código da Sala" />
-          <input type="password" id="roomPassword" class="hidden" placeholder="Senha da Sala (opcional)" />
-          <input type="number" id="limiteJogadores" class="hidden" placeholder="Limite de Jogadores" min="1" max="10" value="4" />
+				  <input type="text" id="roomCode" class="hidden" placeholder="Código da Sala" />
+				  <input type="password" id="roomPassword" class="hidden" placeholder="Senha da Sala (opcional)" />
+				  <input type="number" id="limiteJogadores" class="hidden" placeholder="Limite de Jogadores" min="1" max="10" value="4" />
 
-          <button id="joinBtn" class="btn hidden">Confirmar</button>
-          <button id="btnVoltar" class="btn hidden">Voltar</button>
+				  <button id="joinBtn" class="btn hidden">Confirmar</button>
+				  <button id="btnVoltar" class="btn hidden">Voltar</button>
 
-          <div id="status" class="status-msg hidden"></div>
-        </div>
-      </div>
+				  <div id="status" class="status-msg hidden"></div>
+				</div>
+			  </div>
 
-      <!-- 📌 Tela Sala de Jogo -->
-      <div id="sala" class="screen hidden">
-	  <!-- 📌 Menu Superior -->
-	  <div id="menuBarraSala" class="menu-barra-sala hidden">
-	  <div class="menu-esquerda">
-		<span id="relogioSala" class="relogio-sala"></span>
-	  </div>
-	  <div class="menu-direita">
-	  <!-- Botão fixo de DESCONECTAR	  -->
-		<button id="btnSairSala" class="btn-sair-sala" title="Sair da sala">
-			<svg width="110" height="36" viewBox="0 0 220 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-			  <!-- Fundo verde -->
-			  <rect width="220" height="72" rx="9" fill="#16a34a"/>
-			  <!-- Texto SAÍDA -->
-			  <text x="10" y="50" font-size="40" font-family="Arial, Helvetica, sans-serif" font-weight="bold" fill="#fff" letter-spacing="6">SAÍDA</text>
-			  <!-- Porta L invertido -->
-			  <rect x="185" y="18" width="1.2" height="36" fill="#fff"/>
-			  <rect x="185" y="18" width="22" height="1.2" fill="#fff"/>
-			  <!-- Porta aberta (diagonal parte do pé do L) -->
-			  <polyline points="185,54 207,68" stroke="#fff" stroke-width="3.5" fill="none"/>
-			  <!-- Haste da seta começa agora em x=165 -->
-			  <rect x="165" y="32" width="25" height="9" rx="3.5" fill="#fff"/>
-			  <!-- Triângulo da seta, ponta entra na porta -->
-			  <polygon points="181,24 204,36 181,48" fill="#fff"/>
-			</svg>
-		</button>
-
-
-	  </div>
+			  <!-- 📌 Tela Sala de Jogo -->
+			<div id="sala" class="screen hidden">
+			  <!-- 📌 Menu Superior -->
+				<div id="menuBarraSala" class="menu-barra-sala hidden">
+					  <div class="menu-esquerda">
+						<span id="relogioSala" class="relogio-sala"></span>
+					  </div>
+					  <div class="menu-direita">
+					  <!-- Botão fixo de DESCONECTAR	  -->
+						<button id="btnSairSala" class="btn-sair-sala" title="Sair da sala">
+							<svg width="110" height="36" viewBox="0 0 220 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+							  <!-- Fundo verde -->
+							  <rect width="220" height="72" rx="9" fill="#16a34a"/>
+							  <!-- Texto SAÍDA -->
+							  <text x="10" y="50" font-size="40" font-family="Arial, Helvetica, sans-serif" font-weight="bold" fill="#fff" letter-spacing="6">SAÍDA</text>
+							  <!-- Porta L invertido -->
+							  <rect x="185" y="18" width="1.2" height="36" fill="#fff"/>
+							  <rect x="185" y="18" width="22" height="1.2" fill="#fff"/>
+							  <!-- Porta aberta (diagonal parte do pé do L) -->
+							  <polyline points="185,54 207,68" stroke="#fff" stroke-width="3.5" fill="none"/>
+							  <!-- Haste da seta começa agora em x=165 -->
+							  <rect x="165" y="32" width="25" height="9" rx="3.5" fill="#fff"/>
+							  <!-- Triângulo da seta, ponta entra na porta -->
+							  <polygon points="181,24 204,36 181,48" fill="#fff"/>
+							</svg>
+						</button>
+					  </div>
+				</div>
+			</div>
 	</div>
 
         <!-- 🗺️ Área do Mapa -->
-        <div id="mapa" class="map-area">
-          <!-- Canvas e camadas futuras -->
-        </div>
-      </div>
+	<div id="mapaContainer">
+		<div id="mapa" class="map-area">
+		<!-- Canvas e camadas futuras -->
+		</div>
+	</div>
 
-    </div>
+
 
     <!-- 🔹 SIDEBAR FIXA -->
     <div id="sidebar" class="sidebar hidden">
@@ -103,6 +104,7 @@
         <button class="tab-btn active" data-tab="tab-jogadores" title="Conectados">👥</button>
         <button class="tab-btn" data-tab="tab-personagem" title="Personagens">🧙‍♂️</button>
         <button class="tab-btn" data-tab="tab-compendium" title="Compendium">📚</button>
+		<button class="tab-btn" data-tab="abaConfig" title="Configurações">🧰</button>
       </div>
 
       <!-- Conteúdo das Abas -->
@@ -139,6 +141,13 @@
 			</div>
 		  </div>
 		</div>
+			<div id="abaConfig" class="tab-content">
+			  <h4>Configurações da Sala</h4>
+			  <!-- Upload do mapa -->
+			  <input type="file" id="inputMapa" accept="image/*" style="display:none;">
+			  <button id="btnUploadMapa" class="btn hidden">Upload Mapa</button>
+			  <!-- Aqui podem ir outros controles depois -->
+			</div>
 		  <div id="chatContainer" class="chat-container">
 			<div id="chatMessages" class="chat-messages"></div>
 			<div class="chat-input-area">
