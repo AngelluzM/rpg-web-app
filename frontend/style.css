@@ -292,6 +292,7 @@ input.alerta { border: 2px solid #ff5555; }
     box-shadow: 0 2px 12px rgba(0,0,0,0.12);
     z-index: 100;
     padding: 12px 5vw 12px 5vw;
+	bottom:8px;
   }
 }
 
