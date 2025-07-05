@@ -32,6 +32,8 @@ export function iniciarSala() {
   const chatInput = document.getElementById('chatInput');
   const chatSend = document.getElementById('chatSend');
   const chatMessages = document.getElementById('chatMessages');
+  // variaveis para mapas
+  const btnUploadMapa = document.getElementById('btnUploadMapa')
 
   // Quando entra na sala
   socket.on('joinedRoom', ({ roomCode, playerName, role }) => {
@@ -64,10 +66,12 @@ export function iniciarSala() {
       btnExportar.classList.remove('hidden');
       btnImportar.classList.remove('hidden');
 	  btnAddPdf.classList.remove('hidden');
+	  btnUploadMapa.classList.remove('hidden');
     } else {
       btnExportar.classList.add('hidden');
       btnImportar.classList.add('hidden');
 	  btnAddPdf.classList.add('hidden');
+	  btnUploadMapa.classList.add('hidden');
     }
   });
 
