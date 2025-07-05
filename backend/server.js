@@ -101,6 +101,13 @@ io.on('connection', (socket) => {
 		
       }
     }
+	
+		socket.on('atualizarCompendium', ({ sala, compendium }) => {
+		  if (!salas[sala]) return;
+		  if (socket.id !== salas[sala].host) return;
+		  salas[sala].compendium = compendium || [];
+		  io.to(sala).emit('updateCompendium', { listaPdf: salas[sala].compendium });
+		});
 
     socket.join(roomCode);
     socket.emit('joinedRoom', { roomCode, playerName, role });
