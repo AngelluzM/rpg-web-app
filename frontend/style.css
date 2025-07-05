@@ -249,7 +249,7 @@ input.alerta { border: 2px solid #ff5555; }
    ============================== */
 
 /* Sidebar em tablets/smartphones */
-@media (max-width: 900px) {
+@media (max-width: 500px) {
   .sidebar {
     width: 100vw;
     min-width: 0;
@@ -280,7 +280,7 @@ input.alerta { border: 2px solid #ff5555; }
 }
 
 /* Sidebar em MOBILE: ocupar tela toda */
-@media (max-width: 600px) {
+@media (max-width: 300px) {
   .sidebar {
     width: 100vw;
     min-width: 0;
