@@ -265,6 +265,14 @@ export function iniciarSala() {
 			atualizarCompendiumUI(window.compendium);     // Essa função é um exemplo, adapte para o seu caso!
 			atualizarPersonagensUI(window.personagens);   // Idem
 			atualizarMapaUI(window.mapa);                 // Idem
+			
+			  // 🔥 NOVO: Só o host faz isso!
+			  if (localStorage.getItem('papel') === 'host') {
+				socket.emit('atualizarCompendium', {
+				  sala: localStorage.getItem('sala'),
+				  compendium: window.compendium
+				});
+			  }
 
 		  showStatus(statusDiv, "Dados importados com sucesso!", 'success');
 		} catch (err) {
