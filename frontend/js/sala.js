@@ -260,17 +260,10 @@ export function iniciarSala() {
 		  window.mapa = dados.mapa || {};
 		  window.config = dados.config || {};
 
-				// Atualiza o compendium no servidor para persistir na sala ativa
-				/*socket.emit('atualizarCompendium', {
-				  sala: localStorage.getItem('sala'),
-				  compendium: window.compendium
-				});*/
-				
 		  // Faça update visual/emit para servidor se precisar:
 		  // Exemplo: atualizar UI do compendium, recarregar mapa, etc
 
-			atualizarCompendiumUI(window.compendium);     // Essa função é um exemplo, adapte para o seu caso!
-			atualizarPersonagensUI(window.personagens);   // Idem
+			atualizarPersonagensUI(window.personagens);   // Essa função é um exemplo, adapte para o seu caso!
 			atualizarMapaUI(window.mapa);                 // Idem
 			
 			  // 🔥 NOVO: Só o host faz isso!
