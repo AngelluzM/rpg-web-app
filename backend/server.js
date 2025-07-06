@@ -101,26 +101,6 @@ io.on('connection', (socket) => {
 		
       }
     }
-	
-		socket.on('atualizarCompendium', ({ sala, compendium }) => {
-		  if (!salas[sala]) return;
-		  if (socket.id !== salas[sala].host) return;
-		  salas[sala].compendium = compendium || [];
-		  io.to(sala).emit('updateCompendium', { listaPdf: salas[sala].compendium });
-		});
-
-    socket.join(roomCode);
-    socket.emit('joinedRoom', { roomCode, playerName, role });
-
-	if (salas[roomCode] && salas[roomCode].compendium) {
-	  socket.emit('updateCompendium', { listaPdf: salas[roomCode].compendium });
-	}
-
-    io.to(roomCode).emit('updatePlayerList', {
-      jogadores: salas[roomCode].jogadores
-    });
-  });
-
   socket.on('disconnect', () => {
     console.log('Cliente desconectou:', socket.id);
     for (const [codigo, sala] of Object.entries(salas)) {
@@ -164,6 +144,26 @@ io.on('connection', (socket) => {
 
 
 });
+
+	
+		socket.on('atualizarCompendium', ({ sala, compendium }) => {
+		  if (!salas[sala]) return;
+		  if (socket.id !== salas[sala].host) return;
+		  salas[sala].compendium = compendium || [];
+		  io.to(sala).emit('updateCompendium', { listaPdf: salas[sala].compendium });
+		});
+
+    socket.join(roomCode);
+    socket.emit('joinedRoom', { roomCode, playerName, role });
+
+	if (salas[roomCode] && salas[roomCode].compendium) {
+	  socket.emit('updateCompendium', { listaPdf: salas[roomCode].compendium });
+	}
+
+    io.to(roomCode).emit('updatePlayerList', {
+      jogadores: salas[roomCode].jogadores
+    });
+  });
 
 
 
