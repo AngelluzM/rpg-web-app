@@ -22,24 +22,24 @@ require('./mapaSharing.js')(io, salas);
 // 1. Serve arquivos estáticos
 app.use('/frontend', express.static(path.join(__dirname, '../frontend')));
 
-// 2. Manifest, icons, sw
-app.get('/manifest.json', (req, res) => {
-  res.sendFile(path.join(__dirname, '../manifest.json'));
-});
-app.get('/icon-192.png', (req, res) => {
-  res.sendFile(path.join(__dirname, '../icon-192.png'));
-});
-app.get('/icon-512.png', (req, res) => {
-  res.sendFile(path.join(__dirname, '../icon-512.png'));
-});
-app.get('/sw.js', (req, res) => {
-  res.sendFile(path.join(__dirname, '../sw.js'));
-});
+					// 2. Manifest, icons, sw
+					app.get('/manifest.json', (req, res) => {
+					  res.sendFile(path.join(__dirname, '../manifest.json'));
+					});
+					app.get('/icon-192.png', (req, res) => {
+					  res.sendFile(path.join(__dirname, '../icon-192.png'));
+					});
+					app.get('/icon-512.png', (req, res) => {
+					  res.sendFile(path.join(__dirname, '../icon-512.png'));
+					});
+					app.get('/sw.js', (req, res) => {
+					  res.sendFile(path.join(__dirname, '../sw.js'));
+					});
 
-// 3. Rota catch-all sempre POR ÚLTIMO!
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../index.html'));
-});
+					// 3. Rota catch-all sempre POR ÚLTIMO!
+					app.get('*', (req, res) => {
+					  res.sendFile(path.join(__dirname, '../index.html'));
+					});
 
 io.on('connection', (socket) => {
   console.log('Novo cliente conectado:', socket.id);
@@ -49,7 +49,11 @@ io.on('connection', (socket) => {
       socket.emit('errorMessage', 'Dados incompletos para conexão.');
       return;
     }
-
+	
+		// Se a sala já tem um mapa, manda pro cliente novo:
+		if (salas[roomCode] && salas[roomCode].mapaImg) {
+		  socket.emit('updateMapa', { imgBase64: salas[roomCode].mapaImg });
+		}
     senha = (senha || '').trim();
 
     // Criar nova sala (host)
