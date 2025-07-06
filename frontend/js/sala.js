@@ -260,10 +260,10 @@ export function iniciarSala() {
 		  window.config = dados.config || {};
 
 				// Atualiza o compendium no servidor para persistir na sala ativa
-				socket.emit('atualizarCompendium', {
+				/*socket.emit('atualizarCompendium', {
 				  sala: localStorage.getItem('sala'),
 				  compendium: window.compendium
-				});
+				});*/
 				
 		  // Faça update visual/emit para servidor se precisar:
 		  // Exemplo: atualizar UI do compendium, recarregar mapa, etc
