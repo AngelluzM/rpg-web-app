@@ -99,6 +99,7 @@ export function iniciarSala() {
 	socket.on('updateCompendium', ({ listaPdf }) => {
 		  // CORRIGE: salva também no window.compendium!
 		  window.compendium = listaPdf || [];
+			atualizarCompendiumUI(window.compendium);
 
 	  const listaCompendium = document.getElementById('listaCompendium');
 	  listaCompendium.innerHTML = '';
