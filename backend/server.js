@@ -119,8 +119,6 @@ io.on('connection', (socket) => {
     }
   });
 
-});
-
 	socket.on('addCompendium', ({ sala, titulo, url }) => {
 		if (!salas[sala]) return;
 		if (socket.id !== salas[sala].host) return;
@@ -164,6 +162,7 @@ io.on('connection', (socket) => {
 	  socket.emit('updateCompendium', { listaPdf: salas[roomCode].compendium });
 	}
 
+});
     io.to(roomCode).emit('updatePlayerList', {
       jogadores: salas[roomCode].jogadores
     });
