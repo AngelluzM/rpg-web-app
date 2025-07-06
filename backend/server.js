@@ -119,6 +119,8 @@ io.on('connection', (socket) => {
     }
   });
 
+});
+
 	socket.on('addCompendium', ({ sala, titulo, url }) => {
 		if (!salas[sala]) return;
 		if (socket.id !== salas[sala].host) return;
@@ -146,9 +148,6 @@ io.on('connection', (socket) => {
 		  io.to(sala).emit('chatMessage', { user, msg });
 		});
 
-
-});
-
 	
 		socket.on('atualizarCompendium', ({ sala, compendium }) => {
 		  if (!salas[sala]) return;
@@ -156,6 +155,7 @@ io.on('connection', (socket) => {
 		  salas[sala].compendium = compendium || [];
 		  io.to(sala).emit('updateCompendium', { listaPdf: salas[sala].compendium });
 		});
+
 
     socket.join(roomCode);
     socket.emit('joinedRoom', { roomCode, playerName, role });
